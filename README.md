@@ -1,7 +1,6 @@
 # cpabDiffeo
-CPAB Transformations: finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms derived from parametric, continuously-defined, velocity fields.
+Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms, self-coined CPAB transformations, derived from parametric, continuously-defined, velocity fields.
 
-This implementation is mostly based on our ICCV '15 paper:
-[Freifeld, Hauberg, Batmanghelich and Fisher III] 
+This implementation is based on our [ICCV '15 paper](http://people.csail.mit.edu/freifeld/publications.htm)
 
 Code is coming soon...
