@@ -1,4 +1,4 @@
-# cpabDiffeo
+# cpabDiffeo
 Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms, self-coined CPAB transformations, derived from parametric, continuously-defined, velocity fields.
 
 Code is coming soon: 
