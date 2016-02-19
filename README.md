@@ -4,7 +4,7 @@ Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms
 Code is coming soon: 
 We are making efforts to upload the code as soon as possible. 
 
-**Current estimate for the code's release date: End of February 2016.In the meantime, you may want to try a [Julia implementation](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. His implementation has far less options than the one I will post here (e.g, it is only in 1D or 2D) and doesn't use GPU.**
+**Current estimate for the code's release date: End of February 2016. In the meantime, you may want to try a [Julia implementation](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. His implementation has far less options than the one I will post here (e.g, it is only in 1D or 2D) and doesn't use GPU.**
 
 This implementation is based on our recent paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants of that work that were not included in the ICCV paper due to page limits. 
 
