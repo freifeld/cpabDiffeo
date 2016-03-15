@@ -14,7 +14,7 @@ It also contains additional types of tessellations and bases. There are pros and
 **During Spring 2016 we will release an extended TR that will cover these options.**
 
 
-# **Requirements**
+# Requirements
 - opencv with python's bindings
 - pycuda
 - My "of" and "pyimg" packages:
@@ -26,10 +26,10 @@ git clone https://github.com/freifeld/pyimg
 git clone git@github.com:freifeld/of.git
 git clone git@github.com:freifeld/pyimg.git
 ```
-# OS # 
+# OS
 The code was tested on Linux and Windows. I believe it should work on Mac, but didn't get a chance to test it.
 
-# **Installation **
+# Installation
 (todo: add instructions for Windows users)
 Assuming you cloned this repository as well the "of" and "pyimg" repo into your home directory (marked as ~), you
 will need to adjust your PYTHONPATH accordingly:
@@ -39,7 +39,7 @@ export PYTHONPATH=$PYTHONPATH:$~
 # To enable you import the cpab package which is inside ~/cpabDiffeo
 export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/  
 ```
-# **How to run the code**
+# How to run the code
 For now, this is just quick demo that shows synthesis in 2d and has several possible configurations. I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
 
 To run the demo, first neviagate into the cpab directory. Then:
