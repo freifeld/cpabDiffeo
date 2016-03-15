@@ -54,7 +54,11 @@ For help, you run
 ```
 python cpa2d/TransformWrapper_example_cmdline.py -h
 ```
-
+For example, by default the tessellation type is set to 'I' (triangles in 2D). You can change it to 'II' (rectangles in 2D),
+by running:
+```
+python cpa2d/TransformWrapper_example_usage_cmdline.py --tess=II
+```
 
 
 
