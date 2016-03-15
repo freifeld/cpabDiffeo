@@ -65,7 +65,7 @@ For help, you run
 ```
 python cpa2d/TransformWrapper_example_cmdline.py -h
 ```
-Below are examples for how to change the input arguments and the associated effects. You can also combine more than one option at the time (but see remark below -- TODO). Note that at the first time you run a given configuration, the program will first need to encode the continuity constraints and extract the associated *global* basis (see the paper for details; we will soon add an option for using the local basis instead (whose construction is much faster); each choice has pros and cons). If the number of cells is large, this may take some time. For a given configuration, however, this is done only once; the results computed here will be saved and reused the next time you use the same configuration.
+Below are examples for how to change the input arguments and the associated effects. You can also combine more than one option at the time (but see remark below -- TODO). Note that at the first time you run a given configuration, the program will first need to encode the continuity constraints and extract the associated global basis (see the paper for details; we will soon add an option for using the local basis instead (whose construction is much faster); each choice has pros and cons). If the number of cells is large, this may take some time. For a given configuration, however, this is done only once; the results computed here will be saved and reused the next time you use the same configuration.
 
 - The default tessellation type is set to 'I' (triangles in 2D). That was the only tessellation mentioned in the ICCV '15 paper. To change it to type 'II' (rectangles in 2D), run:
 ```
@@ -76,7 +76,6 @@ python cpa2d/TransformWrapper_example_usage_cmdline.py --tess=II   # or use -t I
 python cpa2d/TransformWrapper_example_usage_cmdline.py --nLevels=2 # or use -nl 2 for a shorter notation)
 ```
 - By default, the base (i.e., coarsest) level uses single rectangle (if tess=II), possibly divided into 4 triangles (if tess=I). In effect, the number of rows and columns are both 1. To change it to, say, 2 rows and 3 columns, run:
--
 ```
 python cpa2d/TransformWrapper_example_usage_cmdline.py --base 2 3 # or use -b 2 3 for a shorter notation)
 ```
