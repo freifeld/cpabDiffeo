@@ -12,6 +12,11 @@ It also contains additional types of tessellations and bases. There are pros and
 
 Finally, you may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one I will maintain here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
+# Versions
+03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
+
+I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
+
 # Requirements
 - opencv with python's bindings
 - pycuda
@@ -38,9 +43,7 @@ export PYTHONPATH=$PYTHONPATH:$~
 export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/  
 ```
 # How to run the code
-For now, this is just quick demo that shows synthesis in 2d and has several possible configurations. I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
-
-To run the demo, first neviagate into the cpab directory. Then:
+For now, this is just quick demo that shows synthesis in 2d and has several possible configurations that the user can modify. To run the demo, first neviagate into the cpab directory. Then:
 ```
 python cpa2d/TransformWrapper_example.py 
 ```
