@@ -42,9 +42,18 @@ For now, this is just quick demo that shows synthesis in 2d and has several poss
 
 To run the demo, first neviagate into the cpab directory. Then:
 ```
-python cpa2d/TransformWrapper_example_usage_cmdline.py 
+python cpa2d/TransformWrapper_example.py 
 ```
 
+The *example* function in this file has various arguments you may want to change. 
+You do it either directly from python  (as done, e.g., in TODO.py) or from the terminal:
+```
+python cpa2d/TransformWrapper_example_cmdline.py 
+```
+For help, you run 
+```
+python cpa2d/TransformWrapper_example_cmdline.py -h
+```
 
 
 
