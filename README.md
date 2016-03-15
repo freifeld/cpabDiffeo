@@ -3,8 +3,6 @@ Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms
 
 I have just uploaded a partial version of the code and will keep updating it during March 2016.
 
-You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. That CPU-based implementation has far less options than the one I will post here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
-
 This implementation is based on our recent paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants of that work that were not included in the ICCV paper due to page limits. 
 
 For example, while the ICCV paper discusses only $R^n$ for n=1,2,3, the implementation here also supports higher values of $n$ (as to be expected, both the dimensionality of the representation and integration computing time increase with $n$ and thus values of $n$ that are too high will be impractical in terms of memory, inference, running time, etc.).
@@ -12,6 +10,7 @@ It also contains additional types of tessellations and bases. There are pros and
 
 **During Spring 2016 we will release an extended TR that will cover these options.**
 
+Finally, you may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one I will maintain here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
 # Requirements
 - opencv with python's bindings
