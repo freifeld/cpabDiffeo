@@ -1,10 +1,9 @@
 # cpabDiffeo
 Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms, self-coined CPAB transformations, derived from parametric, continuously-defined, velocity fields.
 
-Code is coming soon: 
-We are making efforts to upload the code as soon as possible. 
+I have just uploaded a partial version of the code and will keep updating it during March 2016.
 
-**Current estimate for the code's release date: March 2016. In the meantime, you may want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. That CPU-based implementation has far less options than the one I will post here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
+You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. That CPU-based implementation has far less options than the one I will post here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
 This implementation is based on our recent paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants of that work that were not included in the ICCV paper due to page limits. 
 
