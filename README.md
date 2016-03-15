@@ -34,7 +34,14 @@ The code was tested on Linux and Windows. I believe it should work on Mac, but d
 
 # Installation
 (todo: add instructions for Windows users)
-Assuming you cloned this repository as well the "of" and "pyimg" repo into your home directory (marked as ~), you
+First, get this repository:
+```
+# To get them using https:
+git clone https://github.com/freifeld/cpabDiffeo.git
+# To get them using ssh:
+git clone git@github.com:freifeld/cpabDiffeo.git
+```
+Second, assuming you cloned this repository as well the "of" and "pyimg" repo into your home directory (marked as ~), you
 will need to adjust your PYTHONPATH accordingly:
 ```
 # To enable you import both the of and pyimg packages which are in ~
@@ -42,6 +49,7 @@ export PYTHONPATH=$PYTHONPATH:$~
 # To enable you import the cpab package which is inside ~/cpabDiffeo
 export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/  
 ```
+That's it. You should be good to go.
 # How to run the code
 For now, this is just quick demo that shows synthesis in 2d and has several possible configurations that the user can modify. To run the demo, first neviagate into the cpab directory. Then:
 ```
