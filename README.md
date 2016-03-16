@@ -10,11 +10,11 @@ It also contains additional types of tessellations and bases. There are pros and
 
 Finally, you may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one I will maintain here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
-# Author of this software
+## Author of this software
 
 Oren Freifeld (email: freifeld@csail.mit.edu)
 
-# License
+## License
 
 This software is released under the MIT License (included with the software). Note, however, that using this code (and/or the results of running it) to support any form of publication (e.g.,a book, a journal paper, a conference paper, a patent application, etc.) requires you to cite the following paper:
 
@@ -29,7 +29,7 @@ This software is released under the MIT License (included with the software). No
 }
 ```
 
-# Versions
+## Versions
 03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
 
 I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
@@ -47,10 +47,10 @@ git clone https://github.com/freifeld/pyimg
 git clone git@github.com:freifeld/of.git
 git clone git@github.com:freifeld/pyimg.git
 ```
-# OS
+## OS
 The code was tested on Linux and Windows. I believe it should work on Mac, but didn't get a chance to test it.
 
-# Installation
+## Installation
 (todo: add instructions for Windows users)
 First, get this repository:
 ```
@@ -68,7 +68,7 @@ export PYTHONPATH=$PYTHONPATH:$~
 export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/  
 ```
 That's it. You should be good to go.
-# How to run the code
+## How to run the code
 For now, this is just quick demo that shows synthesis in 2d and has several possible configurations that the user can modify. To run the demo, first neviagate into the cpab directory. Then:
 ```
 python cpa2d/TransformWrapper_example.py 
