@@ -74,7 +74,7 @@ For now, this is just quick demo that shows synthesis in 2d and has several poss
 python cpa2d/TransformWrapper_example.py 
 ```
 The **example** function in this file takes several input arguments whose values you can change. 
-You can do it either directly from python (These commented-out examples are taken from the end of the cpa2d/TransformWrapper_example.py file), 
+You can do it either directly from python (These commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**), 
 ```
 #    Here are some other options you may want to try.
 #    You can also try to combine these options, but note
