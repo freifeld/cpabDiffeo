@@ -73,9 +73,36 @@ For now, this is just quick demo that shows synthesis in 2d and has several poss
 ```
 python cpa2d/TransformWrapper_example.py 
 ```
-
 The **example** function in this file takes several input arguments whose values you can change. 
-You can do it either directly from python  (see the commented-out examples in the end of the cpa2d/TransformWrapper_example.py file) or from the terminal:
+You can do it either directly from python (These commented-out examples are taken from the end of the cpa2d/TransformWrapper_example.py file), 
+```
+#    Here are some other options you may want to try.
+#    You can also try to combine these options, but note
+#    that few of these combinations are invalid -- in which case 
+#    an Exception will be thrown.
+#    tw = example(tess='II')
+#    tw = example(nLevels=2)
+#    tw = example(base=[2,3])
+#    tw = example(vol_preserve=True)
+#    tw = example(zero_v_across_bdry=[1,1],valid_outside=True) # Will fail (as it should)
+#    tw = example(zero_v_across_bdry=[1,1]) # Will also fail, since valid_outside defaults to True
+#    tw = example(zero_v_across_bdry=[1,1],valid_outside=False)  # This is fine.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1]) # Will fail (as it should) 
+                                                      # as there are too many constraints
+                                                      # The problem is that base=[1,1]
+                                                      # means we have only one cell, 
+                                                      # so with the added boundary constraints 
+                                                      # there are no degree of freedom.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # This is fine.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # Also fine.
+#     For the effect of scale_spatial on the prior's smoothness, compare the following two lines
+#    tw = example(scale_spatial=.01,base=[4,4],nLevels=1)
+#    tw = example(scale_spatial=10,base=[4,4],nLevels=1)
+#     For the effect of scale_value on the prior's variance, compare the following two lines
+#    tw = example(scale_value=100.0,base=[4,4],nLevels=1)
+#    tw = example(scale_value=300.0,base=[4,4],nLevels=1)
+```
+or from the terminal using the following script:
 ```
 python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default parameters)
 ```
