@@ -30,7 +30,7 @@ This software is released under the MIT License (included with the software). No
 ```
 
 ## Versions
-- 03/16/2015, Version 0.0.2  -- Adde: 1) synthesis in 1D; 2) simple 2D image regiration (intensity-based Gaussian likelihood + MCMC inference)
+- 03/16/2015, Version 0.0.2  -- 1) synthesis in 1D; 2) simple 2D image regiration (intensity-based Gaussian likelihood + MCMC inference)
 - 03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
 
 I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
@@ -70,12 +70,13 @@ export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/
 ```
 That's it. You should be good to go.
 ## How to run the code
-For now, this is just quick demo that shows synthesis in 2d and has several possible configurations that the user can modify. To run the demo, first neviagate into the cpab directory. Then:
+For now, this is just quick demo that shows synthesis in 1d and 2d and has several possible configurations that the user can modify. To run the demo, first neviagate into the cpab directory. Then:
 ```
-python cpa2d/TransformWrapper_example.py 
+python cpa1d/TransformWrapper_example.py  # 1d 
+python cpa2d/TransformWrapper_example.py  # 2d 
 ```
 The **example** function in this file takes several input arguments whose values you can change. 
-You can do it either directly from python (These commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**), 
+You can do it either directly from python (these commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**), e.g.,
 ```
 #    Here are some other options you may want to try.
 #    You can also try to combine these options, but note
@@ -105,7 +106,7 @@ You can do it either directly from python (These commented-out examples are take
 #    tw = example(scale_value=100.0,base=[4,4],nLevels=1) # OK
 #    tw = example(scale_value=300.0,base=[4,4],nLevels=1) # OK
 ```
-or from the terminal using the following script:
+or (in the 2D case) from the terminal using the following script:
 ```
 python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default parameters)
 ```
