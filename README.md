@@ -66,7 +66,7 @@ For help, you run
 ```
 python cpa2d/TransformWrapper_example_cmdline.py -h
 ```
-Below are examples for how to change the input arguments and the associated effects. You can also combine more than one option at the time (but see remark below -- TODO). Note that at the first time you run a given configuration, the program will first need to encode the continuity constraints and extract the associated global basis (see the paper for details; we will soon add an option for using the local basis instead (whose construction is much faster); each choice has pros and cons). If the number of cells is large, this may take some time. For a given configuration, however, this is done only once; the results computed here will be saved and reused the next time you use the same configuration.
+Below are examples for how to change the input arguments and the associated effects. You can also combine more than one option at the time (but see remark below -- TODO). Note that at the first time you run a given configuration, the program will first need to encode the continuity constraints and extract the associated global basis (see the paper for details; we will soon add an option for using the local basis -- whose construction is much faster -- instead ; each choice has pros and cons). If the number of cells is large, this may take some time. For a given configuration, however, this is done only once; the results computed here will be saved and reused the next time you use the same configuration.
 
 - The default tessellation type is set to 'I' (triangles in 2D). That was the only tessellation mentioned in the ICCV '15 paper. To change it to type 'II' (rectangles in 2D), run:
 ```
