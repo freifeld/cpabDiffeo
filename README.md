@@ -91,8 +91,8 @@ You can do it either directly from python (These commented-out examples are take
                                                       # as there are too many constraints
                                                       # The problem is that base=[1,1]
                                                       # means we have only one cell, 
-                                                      # so with the added boundary constraints 
-                                                      # there are no degree of freedom.
+                                                      # so with the added boundary constraints.
+                                                      # there are no degrees of freedom.
 #    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # This is fine.
 #    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # Also fine.
 #     For the effect of scale_spatial on the prior's smoothness, compare the following two lines
