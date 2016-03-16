@@ -319,14 +319,14 @@ if __name__ == '__main__':
                                                       # as there are too many constraints
                                                       # The problem is that base=[1,1]
                                                       # means we have only one cell, 
-                                                      # so with the added boundary constraints 
-                                                      # there are no degree of freedom.
+                                                      # so with the added boundary constraints. 
+                                                      # there are no degrees of freedom.
 #    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # This is fine.
 #    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # Also fine.
-    # For the effect of scale_spatial on the prior's smoothness, compare the following two lines
+#     For the effect of scale_spatial on the prior's smoothness, compare the following two lines
 #    tw = example(scale_spatial=.01,base=[4,4],nLevels=1)
 #    tw = example(scale_spatial=10,base=[4,4],nLevels=1)
-    # For the effect of scale_value on the prior's variance, compare the following two lines
+#     For the effect of scale_value on the prior's variance, compare the following two lines
 #    tw = example(scale_value=100.0,base=[4,4],nLevels=1)
 #    tw = example(scale_value=300.0,base=[4,4],nLevels=1)
     
