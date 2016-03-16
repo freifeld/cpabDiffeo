@@ -34,7 +34,7 @@ This software is released under the MIT License (included with the software). No
 
 I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
 
-# Requirements
+## Requirements
 - generic python packages: numpy; scipy; matplotlib
 - opencv with python's bindings
 - pycuda
