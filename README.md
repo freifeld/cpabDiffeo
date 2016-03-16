@@ -30,7 +30,8 @@ This software is released under the MIT License (included with the software). No
 ```
 
 ## Versions
-03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
+- 03/16/2015, Version 0.0.2  -- Simple 2D image regiration: Intensity-Based Gaussian Likelihood + MCMC inference
+- 03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
 
 I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
 
