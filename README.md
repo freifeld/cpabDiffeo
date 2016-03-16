@@ -21,7 +21,7 @@ I will soon upload more options (other dimensions, inference, etc.). More detail
 - generic python packages: numpy; scipy; matplotlib
 - opencv with python's bindings
 - pycuda
-- My "of" and "pyimg" packages:
+- My **of** and **pyimg** packages:
 ```
 # Using https:
 git clone https://github.com/freifeld/of
@@ -92,7 +92,7 @@ python cpa2d/TransformWrapper_example_usage_cmdline.py --vol_preserve 1 # or use
 ```
 --zero_v_across_bdry 1 1 # or use -zbdry 1 1 
 ```
-The first 1 is for the horizontal boundary, the second is for the vertical boundary; mixed boundary types are not supported at the moment. In this case, *however*, if you use tess=I (which is the default) you will also need to set valid_outside to 1 (by default it is set to 0) while if you use tess=II you will need to use more than a single cell (which is the default) as the base level (since the only affine velocity on a single cell which is zero at the boundary is the one which is zero everywhere). Here is how these calls look like:
+The first 1 is for the horizontal boundary, the second is for the vertical boundary; mixed boundary types are not supported at the moment. In this case, **however**, if you use tess=I (which is the default) you will also need to set valid_outside to 1 (by default it is set to 0) while if you use tess=II you will need to use more than a single cell (which is the default) as the base level (since the only affine velocity on a single cell which is zero at the boundary is the one which is zero everywhere). Here is how these calls look like:
 ```
 python cpa2d/TransformWrapper_example_usage_cmdline.py --zero_v_across_bdry 1 1 --valid_outside 0
 python cpa2d/TransformWrapper_example_usage_cmdline.py --tess=II --zero_v_across_bdry 1 1 --base 2 2
