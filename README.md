@@ -59,7 +59,7 @@ git clone https://github.com/freifeld/cpabDiffeo.git
 # Using ssh:
 git clone git@github.com:freifeld/cpabDiffeo.git
 ```
-Second, assuming you cloned this repository as well the "of" and "pyimg" repo into your home directory (marked as ~), you
+Second, assuming you cloned this repository as well the **of** and **pyimg** repositories in your home directory (marked as ~), you
 will need to adjust your PYTHONPATH accordingly:
 ```
 # To enable you import both the of and pyimg packages which are in ~
@@ -79,7 +79,7 @@ You can do it either directly from python  (see the commented-out examples in th
 ```
 python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default parameters)
 ```
-For help, you run 
+For help, run:
 ```
 python cpa2d/TransformWrapper_example_cmdline.py -h
 ```
