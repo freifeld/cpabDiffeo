@@ -35,6 +35,8 @@ if not inside_spyder():
         
 def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pts=True,
             valid_outside=True,base=[1,1],
+            scale_spatial=.1,
+            scale_value=100,
             permute_cell_idx_for_display=True,
             nLevels=3,
             vol_preserve=False,
@@ -60,6 +62,8 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
                           nCols=img.shape[1],
                           nLevels=nLevels,  
                           base=base,
+                          scale_spatial=scale_spatial, # controls the prior's smoothness
+                          scale_value=scale_value, # controls the prior's variance
                           tess=tess,
                           vol_preserve=vol_preserve,
                           zero_v_across_bdry=zero_v_across_bdry,
@@ -299,7 +303,7 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
 
 
 if __name__ == '__main__':    
-#    tw = example()
+    tw = example()
 #    Here are some other options you may want to try.
 #    You can also try to combine these options, but note
 #    that few of these combinations are invalid -- in which case 
@@ -308,9 +312,24 @@ if __name__ == '__main__':
 #    tw = example(nLevels=2)
 #    tw = example(base=[2,3])
 #    tw = example(vol_preserve=True)
-#    tw = example(zero_v_across_bdry=[1,1],valid_outside=True) # This will fail (as it should)
+#    tw = example(zero_v_across_bdry=[1,1],valid_outside=True) # Will fail (as it should)
 #    tw = example(zero_v_across_bdry=[1,1]) # Will also fail, since valid_outside defaults to True
-    tw = example(zero_v_across_bdry=[1,1],valid_outside=False) # This will wo
+#    tw = example(zero_v_across_bdry=[1,1],valid_outside=False)  # This is fine.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1]) # Will fail (as it should) 
+                                                      # as there are too many constraints
+                                                      # The problem is that base=[1,1]
+                                                      # means we have only one cell, 
+                                                      # so with the added boundary constraints 
+                                                      # there are no degree of freedom.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # This is fine.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # Also fine.
+    # For the effect of scale_spatial on the prior's smoothness, compare the following two lines
+#    tw = example(scale_spatial=.01,base=[4,4],nLevels=1)
+#    tw = example(scale_spatial=10,base=[4,4],nLevels=1)
+    # For the effect of scale_value on the prior's variance, compare the following two lines
+#    tw = example(scale_value=100.0,base=[4,4],nLevels=1)
+#    tw = example(scale_value=300.0,base=[4,4],nLevels=1)
+    
     
     if not inside_spyder():
         raw_input('Press Enter to exit')
