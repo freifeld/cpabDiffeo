@@ -15,24 +15,13 @@ import of.plt
 from of.gpu import CpuGpuArray
 from pyimg import *
 from cpab.cpa2d.TransformWrapper import TransformWrapper
-   
-
-     
+       
 from of.gpu import GpuTimer
-debug = computer.user == 'freifeld'
 
-#   img.imshow() 
-#   cv2destroyAllWindows()
-
-
-
-    
 plt.close('all')
 if not inside_spyder():
      pylab.ion()
      
-
-        
 def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pts=True,
             valid_outside=True,base=[1,1],
             scale_spatial=.1,
@@ -97,10 +86,6 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
     seed=0
     np.random.seed(seed)    
                
-    # sampling from the multiscale prior     
-             
-#        ms_Avees, ms_theta  = tw.sample_from_the_ms_prior_coarse2fine_all_levels()  
-    
     ms_Avees=tw.get_zeros_PA_all_levels()
     ms_theta=tw.get_zeros_theta_all_levels() 
     
@@ -140,9 +125,7 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
 #        theta[:] = some values
 #        Avees = cpa_space.get_zeros_PA()
 #        cpa_space.theta2Avees(theta,Avees)
-#        cpa_space.update_pat(Avees)
-       
-              
+#        cpa_space.update_pat(Avees)         
               
         
         # This step is important and must be done 
@@ -163,7 +146,7 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
         # that has two columns (regardless of the number of rows).
         pts_src = tw.pts_src_dense
         
-        # Create a buffer for the output
+        # Create buffers for the output
         pts_fwd = CpuGpuArray.zeros_like(pts_src) 
         pts_inv = CpuGpuArray.zeros_like(pts_src)  
         
@@ -294,9 +277,6 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
         plt.imshow(img_wrapped_bwd.cpu.astype(np.uint8))    
 #        plt.axis('off') 
         plt.title('inv(img)')
-    
-    
-    
     
     
     return tw

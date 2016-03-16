@@ -9,10 +9,8 @@ import numpy as np
 from pylab import plt 
 from scipy import sparse
 from of.utils import *
-#from cpa.essentials import *
 from cpab.cpaNd import CpaSpace as CpaSpaceNd
 
-#from cpa.utils import *
 from cpab.cpaNd.utils import null
 from cpab.cpa2d.utils import *  
 from cpab.cpa2d.ConfigPlt import ConfigPlt
@@ -225,8 +223,10 @@ class CpaSpace(CpaSpaceNd):
         s = "cpa space (tess type {}):".format(self.tess)
         s += '\n\tCells: {}x{} (nC={})'.format(self.tessellation.nCx,self.tessellation.nCy,self.tessellation.nC)
         s += '\n\td: {}  D: {}'.format(self.d,self.D)
-#        s += '\n\tzero_vx_across_bdry imposed: {}'.format([False,True][self.zero_vx_across_bdry])
-#        s += '\n\tzero_vy_across_bdry imposed: {}'.format([False,True][self.zero_vy_across_bdry])
+        if any(self.zero_v_across_bdry):
+            if not all(self.zero_v_across_bdry):
+                raise NotImplementedError("Mixed bdry types")
+            s += '\n\tzero bdry cond: True'
         s += '\n\tvolume-preserving: {}'.format(self.vol_preserve)
         if self.tess=='I':
             s+='\n\tvalid extention: {}'.format(self.valid_outside)

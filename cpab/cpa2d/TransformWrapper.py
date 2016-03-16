@@ -315,10 +315,7 @@ class TransformWrapper(TransformWrapperNd):
         if timer:
             raise ValueError(timer.secs)
           
-    def __repr__(self):
-        s = 'tw:\n\t'
-        s += '\n\t'.join(repr(self.ms).splitlines())
-        return s
+
           
 
     def create_grid_lines(self,step=0.01,factor=1.0):

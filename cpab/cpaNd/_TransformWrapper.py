@@ -10,6 +10,9 @@ from of.utils import *
 from of.gpu import GpuTimer
 
 class TransformWrapper(object):
+    """
+    An abstract class
+    """
     def __init__(self,
                  vol_preserve,
                  nLevels, 
@@ -23,7 +26,7 @@ class TransformWrapper(object):
         
         if not isinstance(vol_preserve,bool):
             raise TypeError(vol_preserve)
-        if not isinstance(valid_outside,bool):
+        if not isinstance(valid_outside,bool) and self.dim_domain>1:
             raise TypeError(valid_outside)
         
 
@@ -54,7 +57,10 @@ class TransformWrapper(object):
         self.timer.remap = GpuTimer()
         
         
-    
+    def __repr__(self):
+        s = 'tw:\n\t'
+        s += '\n\t'.join(repr(self.ms).splitlines())
+        return s    
     
     def try_to_determine_level(self):
         return self.ms.try_to_determine_level()

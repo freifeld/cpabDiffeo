@@ -104,11 +104,7 @@ class MultiscaleCoarse2FinePrior(object):
         
         cpa_space = self.ms.L_cpa_space[level]   
         if mu is None:
-            mu = cpa_space.zeros_velTess().ravel()                       
-             
-
-#            ipshell('oops')
-#            raise NotImplementedError
+            mu = cpa_space.zeros_velTess().ravel()  
         else:
             if len(mu) != cpa_space.d:
                 raise ValueError(mu.shape,cpa_space.d)
@@ -119,8 +115,7 @@ class MultiscaleCoarse2FinePrior(object):
         if Sigma.shape[0]!=len(mu):
             raise ValueError(Sigma.shape,mu.shape)
                   
-        if scale is None:
-            
+        if scale is None:            
             velTess.ravel()[:] = draw_from_mvnormal(mean=mu,cov=Sigma)                   
         else:  
 #            ipshell('debug')                        
