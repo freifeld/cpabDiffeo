@@ -1,9 +1,7 @@
 # cpabDiffeo
 Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms, self-coined CPAB transformations, derived from parametric, continuously-defined, velocity fields.
 
-I have just uploaded a partial version of the code and will keep updating it during March 2016.
-
-This implementation is based on our recent paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants of that work that were not included in the ICCV paper due to page limits. 
+This Python+CUDA implementation is based on our paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants of that work that were not included in the ICCV paper due to page limits. 
 
 For example, while the ICCV paper discusses only $R^n$ for n=1,2,3, the implementation here also supports higher values of $n$ (as to be expected, both the dimensionality of the representation and integration computing time increase with $n$ and thus values of $n$ that are too high will be impractical in terms of memory, inference, running time, etc.).
 It also contains additional types of tessellations and bases. There are pros and cons for each choice.
@@ -11,6 +9,25 @@ It also contains additional types of tessellations and bases. There are pros and
 **During Spring 2016 we will release an extended TR that will cover these options.**
 
 Finally, you may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one I will maintain here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
+
+# Author of this software
+
+Oren Freifeld (email: freifeld@csail.mit.edu)
+
+# License
+
+This software is released under the MIT License (included with the software). Note, however, that using this code (and/or the results of running it) to support any form of publication (e.g.,a book, a journal paper, a conference paper, a patent application, etc.) requires you to cite the following paper:
+
+```
+@inproceedings{freifeld2015transform,
+    title = {Highly-Expressive Spaces of Well-Behaved Transformations: Keeping It Simple},
+    author = {Oren Freifeld and S{\o}ren Hauberg and Kayhan Batmanghelich and John W. Fisher III},
+    booktitle = {International Conference on Computer Vision (ICCV)},
+    address = {Santiago, Chile},
+    month = Dec,
+    year = {2015}
+}
+```
 
 # Versions
 03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
