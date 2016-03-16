@@ -28,7 +28,7 @@ class TransformWrapper(TransformWrapperNd):
                  scale_value=100,
                  zero_v_across_bdry=[False]*2, # For now, don't change that.
                  tess = None,
-                 valid_outside=False,
+                 valid_outside=True,
                  only_local=False):
         
                     
