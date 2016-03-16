@@ -18,6 +18,7 @@ Finally, you may also want to try a [partial implementation in Julia](https://gi
 I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
 
 # Requirements
+- generic python packages: numpy; scipy; matplotlib
 - opencv with python's bindings
 - pycuda
 - My "of" and "pyimg" packages:
