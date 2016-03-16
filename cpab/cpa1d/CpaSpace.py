@@ -15,8 +15,7 @@ from cpab.cpaNd import CpaSpace as CpaSpaceNd
 from cpab.cpaNd.utils import null
 from cpab.cpa1d.utils import *     
      
-my_dtype = np.float64
-  
+
  
 from cpab.cpa1d.Visualize import Visualize
  
@@ -31,7 +30,7 @@ class CpaSpace(CpaSpaceNd):
                     
     def __init__(self,XMINS,XMAXS,nCs,
                  zero_v_across_bdry,
-                 vol_preserve,warp_around=None,my_dtype=my_dtype,
+                 vol_preserve,warp_around=None,
                  cpa_calcs=None):
 
 #        XMINS = [-x for x in XMAXS] # DEBUG
@@ -44,7 +43,6 @@ class CpaSpace(CpaSpaceNd):
                  vol_preserve=vol_preserve,
                  warp_around=warp_around,
                  zero_vals=[],
-                 my_dtype=my_dtype,
                  cpa_calcs=cpa_calcs)                      
          
         nCx=int(nCs[0])
@@ -218,7 +216,7 @@ if __name__ == '__main__':
                            left_blk_rel_scale=1,
                                         right_vec_scale=1)
     
-    mu = cpa_simple_mean(cpa_space)         
+    mu = cpa_space.get_zeros_theta()         
     Avees = cpa_space.theta2Avees(np.random.multivariate_normal(mean=mu,cov=cpa_covs.cpa_cov))             
     As=cpa_space.Avees2As(Avees)      
   

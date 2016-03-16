@@ -13,27 +13,31 @@ import numpy as np
 from of.utils import ipshell
 from scipy import sparse
 
-def make_it_hashable(arr):
-   return tuple([tuple(r.tolist()) for r in arr]) 
+from cpab.cpaNd import Tessellation as  TessellationNd
+
    
-class Tessellation(object):
+class Tessellation(TessellationNd):
     dim_domain = 2
     _LargeNumber = 10**6
     def __init__(self,nCx,nCy,nC,XMINS,XMAXS,tess):
+        nCx=int(nCx)
+        nCy=int(nCy)
+        nC=int(nC)
         self.nCx=nCx
         self.nCy=nCy
         self.nC=nC
+        if len(XMINS)!=self.dim_domain:
+            raise ValueError(XMINS)
+        if len(XMAXS)!=self.dim_domain:
+            raise ValueError(XMAXS) 
         self.XMINS=XMINS
         self.XMAXS=XMAXS
         self.type=tess
-        if self.type=='I':            
         
-
-            
-            cells_multiidx,cells_verts_homo_coo=self._create_cells_homo_coo(nCx,nCy,nC,XMINS,XMAXS,tess=tess)  
-            self.cells_multiidx = cells_multiidx
-            self.cells_verts_homo_coo = cells_verts_homo_coo
-            
+        cells_multiidx,cells_verts_homo_coo=self._create_cells_homo_coo()
+        self.cells_multiidx = cells_multiidx
+        self.cells_verts_homo_coo = cells_verts_homo_coo
+        if self.type=='I':               
             # THIS IS SPECIFIC FOR TRI TESS IN 2D ONLY 
             # Recall that the first 4 triangles have one shared point:
             # The center of the first rectangle. And this point is the first
@@ -41,16 +45,8 @@ class Tessellation(object):
             # The next four triangles share the center of the second rectangtle,
             # And so on.            
             self.box_centers=self.cells_verts_homo_coo[::4][:,0].copy()
-
-        elif self.type=='II':
-            cells_multiidx,cells_verts_homo_coo=self._create_cells_homo_coo(nCx,nCy,nC,XMINS,XMAXS,tess=tess)
-            self.cells_multiidx = cells_multiidx
-            self.cells_verts_homo_coo = cells_verts_homo_coo   
-            
-            self.box_centers=self.cells_verts_homo_coo.mean(axis=1)  
-#            ipshell('hi')
-#            raise NotImplementedError
-
+        elif self.type=='II':            
+            self.box_centers=self.cells_verts_homo_coo.mean(axis=1) 
         else:
             raise ValueError(tess)
 
@@ -72,11 +68,13 @@ class Tessellation(object):
         self.permuted_indices = np.random.permutation(self.nC)  
 
 
-    def _create_cells_homo_coo(self,nCx,nCy,nC,XMINS,XMAXS,tess='II'):
-        xmin,ymin = XMINS
-        xmax,ymax = XMAXS
-         
-         
+    def _create_cells_homo_coo(self):
+        xmin,ymin = self.XMINS
+        xmax,ymax = self.XMAXS     
+        tess=self.type
+        nCx=self.nCx
+        nCy=self.nCy
+        nC=self.nC
         if tess not in ['II','I']:
             raise ValueError
      
@@ -84,8 +82,6 @@ class Tessellation(object):
         Vy = np.linspace(ymin,ymax,nCy+1)   
         cells_x = []
         cells_x_verts = [] 
-        nCx=int(nCx)
-        nCy=int(nCy)
         if tess == 'II':
             for i in range(nCy):
                 for j in range(nCx):        
@@ -140,22 +136,20 @@ class Tessellation(object):
         return  cells_multiidx,cells_verts 
     
 
-    def create_verts_and_H(self,dim_range,
-#              nCx,nCy,nC, cells_multiidx,
-#              cells_verts,dim_domain,dim_range,
-              valid_outside
-                              ):  
-        """
-        This assummes 2D 
-        
-        H encodes the n'bors info.
-        """    
-        if self.type == 'I':
-            return self.create_verts_and_H_type_I(dim_range,valid_outside)
-        elif self.type=='II':
-            return self.create_verts_and_H_type_II(dim_range)
-        else:
-            raise NotImplementedError
+#    def create_verts_and_H(self,dim_range,
+##              nCx,nCy,nC, cells_multiidx,
+##              cells_verts,dim_domain,dim_range,
+#              valid_outside
+#                              ):  
+#        """      
+#        H encodes the n'bors info.
+#        """    
+#        if self.type == 'I':
+#            return self.create_verts_and_H_type_I(dim_range,valid_outside)
+#        elif self.type=='II':
+#            return self.create_verts_and_H_type_II(dim_range)
+#        else:
+#            raise NotImplementedError
             
             
     def create_verts_and_H_type_I(self,dim_range,
@@ -211,8 +205,8 @@ class Tessellation(object):
                 vi = cells_verts[i]
                 vj = cells_verts[j]
                 
-                vi=make_it_hashable(vi)
-                vj=make_it_hashable(vj)
+                vi=self.make_it_hashable(vi)
+                vj=self.make_it_hashable(vj)
                 
                 shared_verts = set(vi).intersection(vj)            
                 
@@ -339,8 +333,8 @@ class Tessellation(object):
                 vi = cells_verts[i]
                 vj = cells_verts[j]
                
-                vi=make_it_hashable(vi)
-                vj=make_it_hashable(vj)
+                vi=self.make_it_hashable(vi)
+                vj=self.make_it_hashable(vj)
                 
                 shared_verts = set(vi).intersection(vj)
                 
@@ -490,8 +484,8 @@ class Tessellation(object):
                 vi = cells_verts[i]
                 vj = cells_verts[j]
                 
-                vi = make_it_hashable(vi)
-                vj = make_it_hashable(vj)
+                vi = self.make_it_hashable(vi)
+                vj = self.make_it_hashable(vj)
                
                 edge = set(vi).intersection(vj)
                 if len(edge) != 2:

@@ -1,3 +1,4 @@
+from _Tessellation import Tessellation
 from _CpaSpace import CpaSpace
 from _Multiscale import Multiscale
 from _AffineFlow import AffineFlow

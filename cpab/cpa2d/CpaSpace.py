@@ -15,7 +15,6 @@ from cpab.cpaNd.utils import null
 from cpab.cpa2d.utils import *  
 from cpab.cpa2d.ConfigPlt import ConfigPlt
  
-my_dtype = np.float64 # Some of the gpu code is not compatible w/ 32bit.
 
 from cpab.cpa2d.Tessellation import Tessellation
  
@@ -30,8 +29,7 @@ class CpaSpace(CpaSpaceNd):
                  zero_v_across_bdry,
                  vol_preserve,warp_around=[False]*2,
                  conformal=False,
-                 zero_vals=[],
-                 my_dtype=my_dtype,cpa_calcs=None,
+                 zero_vals=[],cpa_calcs=None,
                  tess=['II','I'][0],
                  valid_outside=None,
                  only_local=False):
@@ -49,7 +47,7 @@ class CpaSpace(CpaSpaceNd):
                  warp_around=warp_around,
                  conformal=conformal,
                  zero_vals=zero_vals,
-                 my_dtype=my_dtype,cpa_calcs=cpa_calcs,tess=tess,
+                 cpa_calcs=cpa_calcs,tess=tess,
                  valid_outside=valid_outside,
                  only_local=only_local)                                     
                   

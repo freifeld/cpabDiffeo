@@ -9,7 +9,9 @@ Email: freifeld@csail.mit.edu
 
 
 import numpy as np
-class Tessellation(object):   
+from cpab.cpaNd import Tessellation as  TessellationNd
+
+class Tessellation(TessellationNd):
     dim_domain = 1
     _LargeNumber = 10**6    
     def __init__(self,nCx,XMINS,XMAXS):

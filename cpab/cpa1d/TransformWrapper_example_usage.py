@@ -94,7 +94,7 @@ def example(base=[5],
     return tw
 
 if __name__ == '__main__':    
-#    tw = example()
+    tw = example()
     # More examples:
     
 #    tw = example(base=[1])# Will fail (as it should) -- 1 cell plus the default

@@ -2,8 +2,6 @@
 
 
 
-#from _create_verts_and_H import  create_verts_and_H
-#from _create_verts_and_H_tri import  create_verts_and_H_tri
 from _create_grid_lines import create_grid_lines
 
 from constraints import *

@@ -60,14 +60,13 @@ class CpaSpace(object):
         np.allclose(P,P.dot(P))==True       
     """
     has_GPU =True            
-       
+    my_dtype = np.float64 # Some of the gpu code is not compatible w/ 32bit.
     def __init__(self,XMINS,XMAXS,nCs,
                  zero_v_across_bdry,
                  vol_preserve,
                  warp_around=None,
                  conformal=False,
                  zero_vals=None,
-                 my_dtype=my_dtype,
                  cpa_calcs=None,
                  tess='II',
                  valid_outside=None,
@@ -93,8 +92,7 @@ class CpaSpace(object):
         if cpa_calcs is None:
             raise ValueError("You must pass this argument")
         self._calcs = cpa_calcs    
-        if my_dtype not in [np.float32,np.float64]:
-            raise ValueError
+
         if len(nCs) != self.dim_domain:
             raise ValueError('len(nCs) = {0} =/= {1} = dim_domain'.format(len(nCs),self.dim_domain))
         
@@ -146,7 +144,6 @@ class CpaSpace(object):
                              
         self.warp_around = warp_around            
 #        self.conformal=conformal  # Was a bad idea
-        self.my_dtype=my_dtype
        
         self.tess=tess
         if tess == 'II':
