@@ -80,27 +80,29 @@ You can do it either directly from python (These commented-out examples are take
 #    You can also try to combine these options, but note
 #    that few of these combinations are invalid -- in which case 
 #    an Exception will be thrown.
-#    tw = example(tess='II')
-#    tw = example(nLevels=2)
-#    tw = example(base=[2,3])
-#    tw = example(vol_preserve=True)
+#    tw = example(tess='II') # OK
+#    tw = example(nLevels=2) # OK
+#    tw = example(base=[2,3]) # OK
+#    tw = example(vol_preserve=True) # OK
 #    tw = example(zero_v_across_bdry=[1,1],valid_outside=True) # Will fail (as it should)
 #    tw = example(zero_v_across_bdry=[1,1]) # Will also fail, since valid_outside defaults to True
-#    tw = example(zero_v_across_bdry=[1,1],valid_outside=False)  # This is fine.
+#    tw = example(zero_v_across_bdry=[1,1],valid_outside=False)  # OK
 #    tw = example(tess='II',zero_v_across_bdry=[1,1]) # Will fail (as it should) 
                                                       # as there are too many constraints
                                                       # The problem is that base=[1,1]
                                                       # means we have only one cell, 
-                                                      # so with the added boundary constraints.
+                                                      # so with the added boundary constraints. 
                                                       # there are no degrees of freedom.
-#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # This is fine.
-#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # Also fine.
+#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # OK
+#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # OK
+    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True) # Will fail; no DoF.
+    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True,base=[1,2]) # OK
 #     For the effect of scale_spatial on the prior's smoothness, compare the following two lines
-#    tw = example(scale_spatial=.01,base=[4,4],nLevels=1)
-#    tw = example(scale_spatial=10,base=[4,4],nLevels=1)
+#    tw = example(scale_spatial=.01,base=[4,4],nLevels=1) # OK
+#    tw = example(scale_spatial=10,base=[4,4],nLevels=1) # OK
 #     For the effect of scale_value on the prior's variance, compare the following two lines
-#    tw = example(scale_value=100.0,base=[4,4],nLevels=1)
-#    tw = example(scale_value=300.0,base=[4,4],nLevels=1)
+#    tw = example(scale_value=100.0,base=[4,4],nLevels=1) # OK
+#    tw = example(scale_value=300.0,base=[4,4],nLevels=1) # OK
 ```
 or from the terminal using the following script:
 ```
