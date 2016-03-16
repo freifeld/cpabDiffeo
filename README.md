@@ -70,12 +70,12 @@ export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/
 ```
 That's it. You should be good to go.
 ## How to run the code
-For now, this is just quick demo that shows synthesis in 1d and 2d and has several possible configurations that the user can modify. To run the demo, first neviagate into the cpab directory. Then:
+For now, these are just quick demos that show synthesis in 1d and 2d and have several possible configurations that the user can modify. To run the demos, first neviagate into the cpab directory. Then:
 ```
 python cpa1d/TransformWrapper_example.py  # 1d 
 python cpa2d/TransformWrapper_example.py  # 2d 
 ```
-The **example** function in this file takes several input arguments whose values you can change. 
+The **example** function in either of these files takes several input arguments whose values you can change. 
 You can do it either directly from python (these commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**), e.g.,
 ```
 #    Here are some other options you may want to try.
