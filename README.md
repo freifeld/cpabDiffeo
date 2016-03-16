@@ -79,7 +79,7 @@ You can do it either directly from python  (see the commented-out examples in th
 ```
 python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default parameters)
 ```
-For help, you run 
+For help, run:
 ```
 python cpa2d/TransformWrapper_example_cmdline.py -h
 ```
