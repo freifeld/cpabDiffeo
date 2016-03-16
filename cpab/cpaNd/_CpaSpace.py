@@ -277,10 +277,10 @@ class CpaSpace(object):
 #                self.tessellation.box_centers=self.tessellation.cells_verts_homo_coo[::4][:,0].copy()
                 
 #            e
-            elif self.dim_domain == 3:               
+            elif self.dim_domain == 3:    
+                 pass # moved the code below to Tessellation.py
                 #self.box_centers=self.cells_verts[::5][:,0].copy()
-                self.box_centers=self.cells_verts[::5].mean(axis=1)
-
+#                self.box_centers=self.cells_verts[::5].mean(axis=1)
             else:
                 raise ValueError
               

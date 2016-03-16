@@ -35,6 +35,7 @@ class Tessellation(TessellationNd):
         self.type=tess
         
         cells_multiidx,cells_verts_homo_coo=self._create_cells_homo_coo()
+        
         self.cells_multiidx = cells_multiidx
         self.cells_verts_homo_coo = cells_verts_homo_coo
         if self.type=='I':               
@@ -45,6 +46,7 @@ class Tessellation(TessellationNd):
             # The next four triangles share the center of the second rectangtle,
             # And so on.            
             self.box_centers=self.cells_verts_homo_coo[::4][:,0].copy()
+            
         elif self.type=='II':            
             self.box_centers=self.cells_verts_homo_coo.mean(axis=1) 
         else:
@@ -152,18 +154,14 @@ class Tessellation(TessellationNd):
 #            raise NotImplementedError
             
             
-    def create_verts_and_H_type_I(self,dim_range,
-#              nCx,nCy,nC, cells_multiidx,
-#              cells_verts,dim_domain,dim_range,
-              valid_outside
-                              ):  
+    def create_verts_and_H_type_I(self,dim_range,valid_outside):  
         """
         This assummes 2D 
         
         H encodes the n'bors info.
         """    
         if self.type != 'I':
-            raise NotImplementedError
+            raise ValueError(self.type)
         dim_domain=self.dim_domain
         nC = self.nC
         cells_multiidx=self.cells_multiidx
@@ -409,7 +407,7 @@ class Tessellation(TessellationNd):
         H encodes the n'bors info.
         """    
         if self.type != 'II':
-            raise NotImplementedError
+            raise ValueError(self.type)
         dim_domain=self.dim_domain
         nC = self.nC
         cells_multiidx=self.cells_multiidx
@@ -543,7 +541,7 @@ class Tessellation(TessellationNd):
         nCy=self.nCy
         
         if dim_domain != 2:
-            raise NotImplementedError("For, now we have just the 2D case.")
+            raise ValueError(self.dim_domain)
         if len(zero_v_across_bdry)!=2:
             raise ValueError(zero_v_across_bdry)
         zero_vx_across_bdry,zero_vy_across_bdry = zero_v_across_bdry

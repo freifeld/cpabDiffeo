@@ -8,6 +8,9 @@ Email: freifeld@csail.mit.edu
 
 
 class Tessellation(object):
+    """An abstract class"""
+    def __init__(self,*args,**kwarg):
+        raise Exception("An abstract class")
     def create_verts_and_H(self,dim_range,
               valid_outside
                               ):  
@@ -25,4 +28,4 @@ class Tessellation(object):
         return tuple([tuple(r.tolist()) for r in arr]) 
 
 if __name__ == "__main__":
-    pass
+    Tessellation() # should raise an exception

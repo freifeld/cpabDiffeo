@@ -168,12 +168,11 @@ class CpaSpace(CpaSpaceNd):
          
             
          
-        super(CpaSpace,self).__finish_init__(
-                   tessellation=tessellation,
-        constraintMat=constraintMat,nConstraints=nConstraints,nIterfaces=nEdges,
-#                    cells_multiidx,
-#                    cells_verts,                   
-                    B=B,zero_vals=zero_vals) 
+        super(CpaSpace,self).__finish_init__(tessellation=tessellation,
+                                             constraintMat=constraintMat,
+                                             nConstraints=nConstraints,
+                                             nIterfaces=nEdges,
+                                             B=B,zero_vals=zero_vals) 
                 
                    
             # MOVED THIS TO TESSELLATION.PY                   
