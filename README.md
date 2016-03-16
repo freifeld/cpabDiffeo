@@ -23,10 +23,10 @@ I will soon upload more options (other dimensions, inference, etc.). More detail
 - pycuda
 - My "of" and "pyimg" packages:
 ```
-# To get them using https:
+# Using https:
 git clone https://github.com/freifeld/of
 git clone https://github.com/freifeld/pyimg
-# To get them using ssh:
+# Using ssh:
 git clone git@github.com:freifeld/of.git
 git clone git@github.com:freifeld/pyimg.git
 ```
@@ -37,9 +37,9 @@ The code was tested on Linux and Windows. I believe it should work on Mac, but d
 (todo: add instructions for Windows users)
 First, get this repository:
 ```
-# To get them using https:
+# Using https:
 git clone https://github.com/freifeld/cpabDiffeo.git
-# To get them using ssh:
+# Using ssh:
 git clone git@github.com:freifeld/cpabDiffeo.git
 ```
 Second, assuming you cloned this repository as well the "of" and "pyimg" repo into your home directory (marked as ~), you
