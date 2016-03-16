@@ -30,7 +30,8 @@ This software is released under the MIT License (included with the software). No
 ```
 
 ## Versions
-03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
+- 03/16/2015, Version 0.0.2  -- Simple 2D image regiration: Intensity-Based Gaussian Likelihood + MCMC inference
+- 03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
 
 I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
 
@@ -95,8 +96,8 @@ You can do it either directly from python (These commented-out examples are take
                                                       # there are no degrees of freedom.
 #    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # OK
 #    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # OK
-    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True) # Will fail; no DoF.
-    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True,base=[1,2]) # OK
+#    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True) # Will fail; no DoF.
+#    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True,base=[1,2]) # OK
 #     For the effect of scale_spatial on the prior's smoothness, compare the following two lines
 #    tw = example(scale_spatial=.01,base=[4,4],nLevels=1) # OK
 #    tw = example(scale_spatial=10,base=[4,4],nLevels=1) # OK
