@@ -299,7 +299,19 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
 
 
 if __name__ == '__main__':    
-    tw = example()#    
+#    tw = example()
+#    Here are some other options you may want to try.
+#    You can also try to combine these options, but note
+#    that few of these combinations are invalid -- in which case 
+#    an Exception will be thrown.
+#    tw = example(tess='II')
+#    tw = example(nLevels=2)
+#    tw = example(base=[2,3])
+#    tw = example(vol_preserve=True)
+#    tw = example(zero_v_across_bdry=[1,1],valid_outside=True) # This will fail (as it should)
+#    tw = example(zero_v_across_bdry=[1,1]) # Will also fail, since valid_outside defaults to True
+    tw = example(zero_v_across_bdry=[1,1],valid_outside=False) # This will wo
+    
     if not inside_spyder():
         raw_input('Press Enter to exit')
     
