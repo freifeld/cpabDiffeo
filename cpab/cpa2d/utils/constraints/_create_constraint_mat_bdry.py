@@ -6,10 +6,10 @@ Author: Oren Freifeld
 Email: freifeld@csail.mit.edu
 """
 
-
-import numpy as np
 from of.utils import ObsoleteError
 raise ObsoleteError("Moved to Tessellation.py")
+import numpy as np
+
 
 def create_constraint_mat_bdry(XMINS,XMAXS, cells_x_verts, nC,dim_domain,
                   zero_v_across_bdry,
