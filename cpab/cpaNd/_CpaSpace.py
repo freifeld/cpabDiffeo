@@ -50,7 +50,8 @@ my_dtype = [np.float32,np.float64][1]
 
 class CpaSpace(object):
     """
-    The this class should never be called directly.
+    An abstract class.
+    The this class should never be invoked directly.
     Rather, you should use only its children.
     These classes customize it to 1D, 2D, or 3D, etc.
     
@@ -124,17 +125,28 @@ class CpaSpace(object):
         if len(zero_v_across_bdry) != self.dim_domain:
             raise ValueError(len(zero_v_across_bdry) , self.dim_domain)       
        
-        if tess=='I' and self.dim_domain>1:
-            if any(zero_v_across_bdry) and valid_outside:
-                raise ValueError("dim_domain>1","tess='I'",
-                "zero_v_across_bdry={}".format(zero_v_across_bdry),
-                "valid_outside={}".format(valid_outside),
-                "These choices are inconsistent with each other")       
-            if not all(zero_v_across_bdry) and not valid_outside:
-                raise ValueError("dim_domain>1","tess='I'",
-                "zero_v_across_bdry={}".format(zero_v_across_bdry),
-                "valid_outside={}".format(valid_outside),
-                "These choices are inconsistent with each other")  
+        if tess=='I':
+            if self.dim_domain==2:
+                if any(zero_v_across_bdry) and valid_outside:
+                    raise ValueError("dim_domain==2","tess='I'",
+                    "zero_v_across_bdry={}".format(zero_v_across_bdry),
+                    "valid_outside={}".format(valid_outside),
+                    "These choices are inconsistent with each other")       
+                if not all(zero_v_across_bdry) and not valid_outside:
+                    raise ValueError("dim_domain>1","tess='I'",
+                    "zero_v_across_bdry={}".format(zero_v_across_bdry),
+                    "valid_outside={}".format(valid_outside),
+                    "These choices are inconsistent with each other") 
+            elif self.dim_domain==3:
+                if valid_outside:
+                    raise NotImplementedError
+                elif not all(zero_v_across_bdry):
+                    raise ValueError("dim_domain==3","tess='I'",
+                    "zero_v_across_bdry={}".format(zero_v_across_bdry),
+                    "These choices are inconsistent with each other")
+            else:
+                raise NotImplementedError
+                
        
         self.XMINS = np.asarray(XMINS,dtype=my_dtype)
         self.XMAXS = np.asarray(XMAXS,dtype=my_dtype)                     
@@ -143,7 +155,6 @@ class CpaSpace(object):
          
                              
         self.warp_around = warp_around            
-#        self.conformal=conformal  # Was a bad idea
        
         self.tess=tess
         if tess == 'II':
@@ -233,8 +244,6 @@ class CpaSpace(object):
         self.constraintMat=constraintMat
         self.nConstraints=nConstraints  
         self.nIterfaces=nIterfaces             
-#        self.cells_multiidx=cells_multiidx
-#        self.cells_verts=cells_verts        
         self.B=B
         
         if B is not None:
@@ -258,34 +267,11 @@ class CpaSpace(object):
          
         if self.d==0:
             msg="""
-            dim is 0.
+            dim = 0 (no degrees of freedom).
             {0}""".format(self.subspace_string)
             
             raise ValueError(msg)      
-        if self.tess == 'II':                              
-            pass # moved the code below to Tessellation.py  
-        elif self.tess == 'I':             
-            if self.dim_domain == 2:
-                pass # moved the code below to Tessellation.py
-                
-                # Recall that the first 4 triangles have one shared point:
-                # The center of the first rectangle. And this point is the first
-                # in each of these 4 triangles.
-                # The next four triangles share the center of the second rectangtle,
-                # And so on.
-#                self.box_centers=self.cells_verts[::4][:,0].copy()
-#                self.tessellation.box_centers=self.tessellation.cells_verts_homo_coo[::4][:,0].copy()
-                
-#            e
-            elif self.dim_domain == 3:    
-                 pass # moved the code below to Tessellation.py
-                #self.box_centers=self.cells_verts[::5][:,0].copy()
-#                self.box_centers=self.cells_verts[::5].mean(axis=1)
-            else:
-                raise ValueError
-              
-        else:
-            raise ValueError
+
         
         cols = self.tessellation.box_centers.T[:-1]                                                          
         incs=[]
@@ -325,9 +311,7 @@ class CpaSpace(object):
         
         # The variables below are intendend for repeated use.
         self.Avees = self.get_zeros_PA()
-#        self.As = np.zeros((self.nC,self.Ashape[0],self.Ashape[1]))
-        self.As = self.Avees.reshape(self.nC,self.Ashape[0],self.Ashape[1])
-        
+        self.As = self.Avees.reshape(self.nC,self.Ashape[0],self.Ashape[1])        
         
         self.pat = PAT(pa_space=self,Avees=self.get_zeros_PA())  
 
@@ -550,10 +534,7 @@ class CpaSpace(object):
             s+= '_zeros_in_'+'_'.join([''.join(map(str,x)) for x in zero_vals])
        
         if vol_preserve:
-            s+='_vp'
-#        if conformal:   
-#            s+='_conformal'
-         
+            s+='_vp'      
         if self.tess=='I' and self.dim_domain ==2:
             s+='_ext_{}'.format(int(valid_outside))
             

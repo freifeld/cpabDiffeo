@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python
 """
 Created on Mon Sep 29 09:46:24 2014
 
@@ -223,21 +223,21 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
         
         figsize = (12,12)
         plt.figure(figsize=figsize)
-        plt.subplot(431)            
-        tw.config_plt()
+
          
         if eval_v: 
-            plt.subplot(432)
+            plt.subplot(332)
             tw.imshow_vx() 
             plt.title('vx')
-            plt.subplot(433)
+            plt.subplot(333)
             tw.imshow_vy()   
             plt.title('vy') 
         
         if eval_cell_idx:
-            plt.subplot(4,3,10)
+            plt.subplot(331)
             cell_idx_disp = cell_idx.cpu.reshape(img.shape[0],-1)
             plt.imshow(cell_idx_disp)
+            plt.title('tess (type {})'.format(tess))
         
         if show_downsampled_pts:
             ds=20
@@ -251,29 +251,29 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
            
             use_lims=use_lims_when_plotting
 #            return tw
-            plt.subplot(434)    
+            plt.subplot(334)    
             plt.plot(pts_src_ds[:,0],pts_src_ds[:,1],'r.')
             plt.title('pts ds')
             tw.config_plt()
-            plt.subplot(435)
+            plt.subplot(335)
             plt.plot(pts_fwd_ds[:,0],pts_fwd_ds[:,1],'g.')
             plt.title('fwd(pts)')
             tw.config_plt(axis_on_or_off='on',use_lims=use_lims)
-            plt.subplot(436)
+            plt.subplot(336)
             plt.plot(pts_inv_ds[:,0],pts_inv_ds[:,1],'b.')
             plt.title('inv(pts)')
             tw.config_plt(axis_on_or_off='on',use_lims=use_lims)
          
                         
-        plt.subplot(437)
+        plt.subplot(337)
         plt.imshow(img_original.cpu.astype(np.uint8))
         plt.title('img')
 #        plt.axis('off') 
-        plt.subplot(438)
+        plt.subplot(338)
         plt.imshow(img_wrapped_fwd.cpu.astype(np.uint8))
 #        plt.axis('off') 
         plt.title('fwd(img)')
-        plt.subplot(439)
+        plt.subplot(339)
         plt.imshow(img_wrapped_bwd.cpu.astype(np.uint8))    
 #        plt.axis('off') 
         plt.title('inv(img)')
