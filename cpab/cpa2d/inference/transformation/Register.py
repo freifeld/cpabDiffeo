@@ -52,7 +52,8 @@ class Register(object):
                       sigma_signal=None,
                       wlp=1e-4,
                       ll_type=['gaussian','gaussian_on_distancetransform'][0],
-                      only_local=False):
+                      only_local=False,
+                      valid_outside=True):
         ll_type = ll_type.lower()                          
         if ll_type == 'gaussian':
             self.SDLL=SDLL_gaussian
@@ -85,6 +86,7 @@ class Register(object):
                               scale_value=scale_value,
                               zero_v_across_bdry=zero_v_across_bdry,
                               only_local=only_local,
+                              valid_outside=valid_outside
                               )
 #                              500,500,500,50000,5000
         

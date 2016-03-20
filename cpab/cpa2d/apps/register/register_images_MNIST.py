@@ -27,10 +27,7 @@ def main(data,infernece_params,dispOn ):
 
     nRows,nCols = img1.shape[:2]  
     nPts = nRows * nCols 
-   
       
-        
-    
     reg = Register(nRows=nRows,
                    nCols=nCols,
                    base=inference_params.base,
@@ -41,7 +38,9 @@ def main(data,infernece_params,dispOn ):
                    scale_value=inference_params.scale_value,
                    wlp=inference_params.wlp,                   
                    ll_type=inference_params.ll_type,
-                   only_local=False)    
+                   only_local=False,
+                   valid_outside=infernece_params.valid_outside)  
+                 
     reg.set_dense(domain_start=0,domain_end=nPts)
                         
     reg.set_data(x=reg.tw.pts_src_dense,
@@ -100,6 +99,7 @@ if __name__ == "__main__":
         MCMCniters_per_level = 10000
         isbinary = False   
 
+        valid_outside=True
         # values for the prior
         scale_spatial = 10  # the larger the smoother
         scale_value = 500 # variance
