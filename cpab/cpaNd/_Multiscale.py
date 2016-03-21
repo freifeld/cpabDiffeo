@@ -255,13 +255,15 @@ class Multiscale(object):
                 msg="With the current tetrahedra, this is too much of a pain."
                 raise NotImplementedError(msg)
                 
-            coarse=Avees_coarse.reshape(sp_coarse.nCz,
-                                        sp_coarse.nCy,
-                                        sp_coarse.nCx,-1)
-            fine=Avees_fine.reshape(sp_fine.nCz,sp_fine.nCy,sp_fine.nCx,-1)
-            for i in range(sp_coarse.nCy):
-                for j in range(sp_coarse.nCx):
-                    for k in range(sp_coarse.nCz):
+            coarse=Avees_coarse.reshape(sp_coarse.tessellation.nCz,
+                                        sp_coarse.tessellation.nCy,
+                                        sp_coarse.tessellation.nCx,-1)
+            fine=Avees_fine.reshape(sp_fine.tessellation.nCz,
+                                    sp_fine.tessellation.nCy,
+                                    sp_fine.tessellation.nCx,-1)
+            for i in range(sp_coarse.tessellation.nCy):
+                for j in range(sp_coarse.tessellation.nCx):
+                    for k in range(sp_coarse.tessellation.nCz):
                         if sp_coarse.tess == 'II':                             
                             _coarse= coarse[i,j,k]                           
                             fine[2*i+0,2*j+0,2*k+0]=_coarse
@@ -274,7 +276,7 @@ class Multiscale(object):
                             fine[2*i+1,2*j+1,2*k+1]=_coarse                             
                             
                         elif sp_coarse.tess == 'I':
-                            msg="With the current tetrahedra, this is too much of a pain."
+                            msg="With the tetrahedra, this is too much of a pain."
                                                        
                             raise NotImplementedError(msg)
             
@@ -283,7 +285,7 @@ class Multiscale(object):
         else:
             raise NotImplementedError                    
                  
-        # Note that since reshape doesn't copy, we already change Avees_fine.    
+        # Note that since reshape doesn't copy, we already changed Avees_fine.    
        
  
    
