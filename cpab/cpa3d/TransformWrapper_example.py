@@ -74,8 +74,8 @@ def example(tess='I',base=[1,1,2],nLevels=2,
 #            1/0
             if level==0:
                 tw.sample_gaussian(level,ms_Avees[level],ms_theta[level],mu=None)# zero mean
-                ms_theta[level].fill(0)
-                ms_theta[level][-4]=10
+#                ms_theta[level].fill(0)
+#                ms_theta[level][-4]=10
                 cpa_space.theta2Avees(theta=ms_theta[level],Avees=Avees)
             else:
                 tw.sample_from_the_ms_prior_coarse2fine_one_level(ms_Avees,ms_theta,
@@ -247,6 +247,9 @@ if __name__ == "__main__":
 #    tw = example(base=[2,2,2],nLevels=1,tess='II',zero_v_across_bdry=[False]*3) 
 
 #    tw = example(base=[3,3,3],nLevels=1,tess='II',zero_v_across_bdry=[False]*3,
+#                 eval_v=True) 
+
+#    tw = example(base=[7,7,7],nLevels=1,tess='II',zero_v_across_bdry=[False]*3,
 #                 eval_v=True) 
 
     if not inside_spyder():

@@ -103,6 +103,7 @@ class CpaSpace(CpaSpaceNd):
                 separable_basis=False
             if vol_preserve:
                 separable_basis=False
+#            raise ValueError(separable_basis,debug_separable_basis)
             
             if separable_basis == False or debug_separable_basis:                                    
                 L = create_cont_constraint_mat(H,v1,v2,v3,v4,nSides,nConstraints,

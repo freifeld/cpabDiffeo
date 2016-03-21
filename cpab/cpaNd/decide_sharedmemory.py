@@ -34,18 +34,20 @@ def decide_sharedmemory(dim_domain,dim_range,nC):
             sharedmemory=2
         elif computer.has_good_gpu_card==0 and  nC <= 4**5:
             sharedmemory=1
-        elif computer.has_good_gpu_card==0 and dim_domain ==2:
+        elif computer.has_good_gpu_card==0:
             sharedmemory=0
     
         elif computer.has_good_gpu_card and  nC <= 4**5:
             sharedmemory=2
         else:
             raise NotImplementedError(computer.has_good_gpu_card, dim_domain,  nC)
-    elif dim_domain==3:
+    elif dim_domain==3:        
         if computer.has_good_gpu_card==0 and  nC <= 4**4: 
             sharedmemory=2  
-        elif computer.has_good_gpu_card==0 and  nC <= 4**5: 
-            sharedmemory=1 
+        elif computer.has_good_gpu_card==0 and  nC <= 2*4**4: 
+            sharedmemory=1
+        elif computer.has_good_gpu_card==0: 
+            sharedmemory=0
         elif computer.has_good_gpu_card and nC <= 4**4:
             sharedmemory=2
         elif computer.has_good_gpu_card and nC <= 4**5:
