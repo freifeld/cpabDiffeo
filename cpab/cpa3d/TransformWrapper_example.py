@@ -71,10 +71,11 @@ def example(tess='I',base=[1,1,2],nLevels=2,
         for level in range(tw.ms.nLevels): 
             cpa_space = tw.ms.L_cpa_space[level]  
             Avees = ms_Avees[level]    
+#            1/0
             if level==0:
                 tw.sample_gaussian(level,ms_Avees[level],ms_theta[level],mu=None)# zero mean
-    #            ms_theta[level].fill(0)
-    #            ms_theta[level][0]=10
+                ms_theta[level].fill(0)
+                ms_theta[level][-4]=10
                 cpa_space.theta2Avees(theta=ms_theta[level],Avees=Avees)
             else:
                 tw.sample_from_the_ms_prior_coarse2fine_one_level(ms_Avees,ms_theta,
@@ -217,7 +218,8 @@ def example(tess='I',base=[1,1,2],nLevels=2,
         plt.title('slice from inv(img)')
         
     
-    if 0: # debug    
+    if 1: # debug    
+        
         cpa_space=tw.ms.L_cpa_space[level]
         if eval_v:
             vx=tw.v_dense.cpu[:,0].reshape(cpa_space.x_dense_grid_img.shape[1:])
@@ -236,12 +238,16 @@ if __name__ == "__main__":
     # The following line should fail, since there are not DoF.
     #tw = example(base=[1,1,1],nLevels=1,tess='II',zero_v_across_bdry=[True]*3) 
 
-    #tw = example(base=[1,1,1],nLevels=1,tess='II',zero_v_across_bdry=[False]*3) 
+#    tw = example(base=[1,1,1],nLevels=1,tess='II',zero_v_across_bdry=[False]*3) 
     #tw = example(base=[2,2,2],nLevels=1,tess='II',zero_v_across_bdry=[True]*3) 
 #    tw = example(base=[2,2,2],nLevels=3,tess='II',zero_v_across_bdry=[True]*3) 
 
 #    tw = example(base=[2,2,2],nLevels=1)
 #    tw = example(base=[1,1,1],nLevels=2,tess='II',zero_v_across_bdry=[False]*3)
+#    tw = example(base=[2,2,2],nLevels=1,tess='II',zero_v_across_bdry=[False]*3) 
+
+#    tw = example(base=[3,3,3],nLevels=1,tess='II',zero_v_across_bdry=[False]*3,
+#                 eval_v=True) 
 
     if not inside_spyder():
         raw_input('Press Enter to exit')

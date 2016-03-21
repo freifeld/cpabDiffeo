@@ -16,7 +16,7 @@ from cpab.cpaNd.utils import null
 from cpab.cpa3d.utils import *  
 
 from cpab.cpa3d.Tessellation import Tessellation
-
+from scipy.linalg import block_diag
  
 class CpaSpace(CpaSpaceNd):
     dim_domain=3
@@ -70,6 +70,7 @@ class CpaSpace(CpaSpaceNd):
             nConstraints=subspace['nConstraints']
             nSides=subspace['nSides']
             constraintMat=subspace['constraintMat']
+            separable_basis=subspace['separable_basis']
 #            cells_verts =np.asarray(cells_verts)   
             
         except FileDoesNotExistError:    
@@ -95,11 +96,23 @@ class CpaSpace(CpaSpaceNd):
         
             
 #            cells_verts =np.asarray(cells_verts)      
-                                                  
-            L = create_cont_constraint_mat(H,v1,v2,v3,v4,nSides,nConstraints,
-                                               nC,dim_domain=self.dim_domain,
-                                               dim_range=self.dim_range,tess=tess)   
+             
+            separable_basis=True
+            debug_separable_basis=False
+            if any(zero_v_across_bdry):
+                separable_basis=False
+            if vol_preserve:
+                separable_basis=False
             
+            if separable_basis == False or debug_separable_basis:                                    
+                L = create_cont_constraint_mat(H,v1,v2,v3,v4,nSides,nConstraints,
+                                                   nC,dim_domain=self.dim_domain,
+                                                   dim_range=self.dim_range,tess=tess)   
+            if separable_basis:
+                Lx = create_cont_constraint_mats(H,v1,v2,v3,v4,nSides,nConstraints,
+                                                   nC,dim_domain=self.dim_domain,
+                                                   dim_range=self.dim_range,tess=tess)
+                                                   
             if len(zero_vals): 
                 Lzerovals = create_constraint_mat_zerovals(nC,dim_domain=self.dim_domain,
                                                            dim_range=self.dim_range,
@@ -117,7 +130,10 @@ class CpaSpace(CpaSpaceNd):
 #               #raise ValueError("I am not sure this is still supported")
             
                 Lbdry = self.tessellation.create_constraint_mat_bdry(
-                                  zero_v_across_bdry=self.zero_v_across_bdry)            
+                                  zero_v_across_bdry=self.zero_v_across_bdry)
+                
+
+               
 
 #                Lbdry = create_constraint_mat_bdry(XMINS,XMAXS, cells_verts, nC,
 #                                      dim_domain=self.dim_domain,
@@ -136,18 +152,50 @@ class CpaSpace(CpaSpaceNd):
                 Lvol = create_constraint_mat_preserve_vol(nC,dim_domain=self.dim_domain)
                 L = np.vstack([L,Lvol])
                 nConstraints += Lvol.shape[0]
-#            ipshell('hi')
-#            1/0
-            try:
-                B=null(L)     
-            except:
-                print '----------------------'
-                print self.filename_subspace
-                print '---------------------'
-                raise
-              
+            
+            
+            
+            if not separable_basis:
+                try:
+                    B=null(L)     
+                except:
+                    print '----------------------'
+                    print self.filename_subspace
+                    print '---------------------'
+                    raise
+            else:
+                if separable_basis: # to solve a nuch smaller SVD and to get a sparser basis                  
+                    if vol_preserve or any(zero_v_across_bdry):
+                        raise NotImplementedError
+                    B1=null(Lx)            
+                    # B1.shape is (nC*nHomoCoo)x dim_null_space
+                    
+                    if debug_separable_basis:
+                        B=null(L)
+                        if B1.shape[0]!=B.shape[0]/3:
+                            raise ValueError(B1.shape,B.shape)
+                        if float(B1.shape[1])*self.dim_range != B.shape[1]:
+                            raise ValueError(B1.shape,B.shape)
+                    _B = np.zeros((B1.shape[0]*3,B1.shape[1]*self.dim_range),B1.dtype)
+                    for j in range(B1.shape[1]):
+                        Avees = B1[:,j] # length=self.nC*self.nHomoCoo
+                        arr=Avees.reshape(self.nC,self.nHomoCoo)
+                        for k in range(self.dim_range):
+                            arr2=np.hstack([arr if m==k else np.zeros_like(arr) for m in range(self.dim_range)])
+                            arr3=arr2.reshape(self.nC,self.lengthAvee)
+                            arr4=arr3.flatten()                
+                            _B[:,j+k*B1.shape[1]]=arr4
+                    B=_B
+            
+#           print np.linalg.matrix_rank(_B)
+
+#           
+            
+#            2/0
+            if separable_basis:
+                L=Lx
             constraintMat=sparse.csr_matrix(L)
-            Pkl.dump(self.filename_subspace,{'B':B,
+            Pkl.dump(self.filename_subspace,{'B':B,'separable_basis':separable_basis,
                                              'nConstraints':nConstraints,
                                              'nSides':nSides,
                                              'constraintMat':constraintMat},
@@ -163,7 +211,7 @@ class CpaSpace(CpaSpaceNd):
                                              nIterfaces=nSides,
                                              B=B,zero_vals=zero_vals)
 
-
+        self.separable_basis=separable_basis
 
 
         
@@ -206,7 +254,8 @@ class CpaSpace(CpaSpaceNd):
                     #Ai.dot(shared) is 3 x 3 =  dim x #verts_per_side
                     # At the moment, the problem is w/ the last entry of the 4 vert (100,100,0,1)
                     if not np.allclose((Ai-Aj).dot(shared),0):
-                        raise ValueError
+                        ipshell('FAILED ALL CLOSE TEST')
+                        raise ValueError                    
 
 #        ipshell('hi')
 #        1/0
@@ -452,7 +501,6 @@ if __name__=="__main__":
             points3d(x1,y1,z1,scale_factor=5,color=blue)
 
 
-#    mayavi_mlab_plot3d3d(x,y,z,scale_factor=.5,color=blue)
     
 
 

@@ -3,3 +3,8 @@ from _create_cont_constraint_mat import create_cont_constraint_mat
 from cpab.cpaNd.utils import create_constraint_mat_preserve_vol
 from cpab.cpaNd.utils import create_constraint_mat_zerovals
 
+
+
+from _create_cont_constraint_mats import create_cont_constraint_mats
+
+
