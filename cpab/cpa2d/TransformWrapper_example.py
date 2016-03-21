@@ -98,6 +98,15 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
     
     
     print('\nimg shape: {}\n'.format(img_original.shape))
+
+    # You don't have use these. You can use any 2d array 
+    # that has two columns (regardless of the number of rows).
+    pts_src = tw.pts_src_dense
+    
+    # Create buffers for the output
+    pts_fwd = CpuGpuArray.zeros_like(pts_src) 
+    pts_inv = CpuGpuArray.zeros_like(pts_src)  
+
    
     for level in range(tw.ms.nLevels):
         
@@ -142,13 +151,7 @@ def example(img=None,tess='I',eval_cell_idx=True,eval_v=True,show_downsampled_pt
             tw.calc_v(level=level) 
         
     
-        # You don't have use these. You can use any 2d array 
-        # that has two columns (regardless of the number of rows).
-        pts_src = tw.pts_src_dense
-        
-        # Create buffers for the output
-        pts_fwd = CpuGpuArray.zeros_like(pts_src) 
-        pts_inv = CpuGpuArray.zeros_like(pts_src)  
+
         
         
         # optional, if you want to time it

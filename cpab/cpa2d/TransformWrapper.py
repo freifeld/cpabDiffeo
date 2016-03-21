@@ -299,9 +299,7 @@ class TransformWrapper(TransformWrapperNd):
         if not isinstance(img,CpuGpuArray):
             raise TypeError(type(img))
         if not isinstance(img_wrapped,CpuGpuArray):
-            raise TypeError(type(img_wrapped))
-
-       
+            raise TypeError(type(img_wrapped))      
     
         img_wrapped.gpu.fill(0)
         if timeit:
@@ -314,8 +312,6 @@ class TransformWrapper(TransformWrapperNd):
         timer and timer.toc()
         if timer:
             raise ValueError(timer.secs)
-          
-
           
 
     def create_grid_lines(self,step=0.01,factor=1.0):

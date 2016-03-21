@@ -412,12 +412,12 @@ class Tessellation(TessellationNd):
         nC = self.nC
         cells_multiidx=self.cells_multiidx
         cells_verts=self.cells_verts_homo_coo
-        nCx=self.nCx
-        nCy=self.nCy
+#        nCx=self.nCx
+#        nCy=self.nCy
         
         if dim_domain !=2:
-            raise NotImplementedError(dim_domain)
-        if dim_range not in (1,2):
+            raise ValueError(dim_domain)
+        if dim_range not in (1,dim_domain):
             raise NotImplementedError(dim_range)  
                
         nbrs = np.zeros((nC,nC))

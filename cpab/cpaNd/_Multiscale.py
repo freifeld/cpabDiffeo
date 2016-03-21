@@ -251,9 +251,8 @@ class Multiscale(object):
                     else:
                         raise ValueError(sp_coarse.tess)
         elif self.dim_domain == 3: 
-            if sp_coarse.tess=='tri':
-                msg="With the current tetrahedra, this is too much of a pain."
-                raise NotImplementedError(msg)
+            if sp_coarse.tess=='I':              
+                raise NotImplementedError("coarse to fine: tess='I', dim_domain=3")
                 
             coarse=Avees_coarse.reshape(sp_coarse.tessellation.nCz,
                                         sp_coarse.tessellation.nCy,
@@ -275,11 +274,8 @@ class Multiscale(object):
                             fine[2*i+1,2*j+1,2*k+0]=_coarse 
                             fine[2*i+1,2*j+1,2*k+1]=_coarse                             
                             
-                        elif sp_coarse.tess == 'I':
-                            msg="With the tetrahedra, this is too much of a pain."
-                                                       
-                            raise NotImplementedError(msg)
-            
+                        elif sp_coarse.tess == 'I':    
+                            raise NotImplementedError("coarse to fine: tess='I', dim_domain=3")
             
                        
         else:
