@@ -22,7 +22,10 @@ def decide_sharedmemory(dim_domain,dim_range,nC):
     """
     
     if dim_domain==1:
+        # TODO: set the numbers for the dim_domain case
         if computer.has_good_gpu_card==0:
+            sharedmemory=2
+        elif computer.has_good_gpu_card:
             sharedmemory=2
         else:            
             raise NotImplementedError(computer.has_good_gpu_card, dim_domain,  nC)
