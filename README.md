@@ -30,10 +30,11 @@ This software is released under the MIT License (included with the software). No
 ```
 
 ## Versions
-- 03/16/2015, Version 0.0.2  -- 1) synthesis in 1D; 2) simple 2D image regiration (intensity-based Gaussian likelihood + MCMC inference)
-- 03/15/2015, Version 0.0.1  -- First release (synthsis in 2D)
+- 03/21/2016, Version 0.0.3  -- Synthesis in 3D.
+- 03/16/2016, Version 0.0.2  -- 1) synthesis in 1D; 2) simple 2D image regiration (intensity-based Gaussian likelihood + MCMC inference)
+- 03/15/2016, Version 0.0.1  -- First release (synthsis in 2D).
 
-I will soon upload more options (other dimensions, inference, etc.). More details coming soon.
+Coming soon: More options (dim>3, more options for inference, more options for the prior, handling landmarks, more applications, etc). 
 
 ## Requirements
 - generic python packages: numpy; scipy; matplotlib
@@ -70,13 +71,15 @@ export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/
 ```
 That's it. You should be good to go.
 ## How to run the code
-For now, these are just quick demos that show synthesis in 1d and 2d and have several possible configurations that the user can modify. To run the demos, first neviagate into the cpab directory. Then:
+For now, these are just quick demos that show synthesis in 1d, 2d, or 3d and have several possible configurations that the user can modify. To run the demos, first neviagate into the cpab directory. Then:
 ```
 python cpa1d/TransformWrapper_example.py  # 1d 
 python cpa2d/TransformWrapper_example.py  # 2d 
+python cpa3d/TransformWrapper_example.py  # 3d 
+
 ```
 The **example** function in either of these files takes several input arguments whose values you can change. 
-You can do it either directly from python (these commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**), e.g.,
+You can do it either directly from python, e.g.  (these commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**):
 ```
 #    Here are some other options you may want to try.
 #    You can also try to combine these options, but note
