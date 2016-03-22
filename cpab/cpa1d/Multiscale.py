@@ -111,7 +111,7 @@ class Multiscale(MultiscaleNd):
         return self.L_cpa_space[0].get_x_dense(nPts)
  
 
-from pyvision.essentials import *    
+#from pyvision.essentials import *    
 #def main(): 
 if __name__ == '__main__':
     

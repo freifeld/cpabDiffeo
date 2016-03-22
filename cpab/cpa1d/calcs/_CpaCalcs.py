@@ -5,11 +5,11 @@ Created on Thu Jan 23 10:43:35 2014
 Author: Oren Freifeld
 Email: freifeld@csail.mit.edu
 """
-
+import numpy as np
 from cpab.cpaNd import CpaCalcs as CpaCalcsNd
 
 from of.utils import ipshell
-from pyvision.essentials import *
+#from pyvision.essentials import *
 from pylab import plt
  
 class CpaCalcs(CpaCalcsNd): 

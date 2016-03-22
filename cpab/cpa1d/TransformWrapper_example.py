@@ -10,7 +10,7 @@ from pylab import plt
 from of.utils import *
 
 from of.gpu import CpuGpuArray
-from pyvision.essentials import *  
+#from pyvision.essentials import *  
 from cpab.cpa1d.TransformWrapper import TransformWrapper
 from cpab.cpa1d.Visualize import Visualize
 
