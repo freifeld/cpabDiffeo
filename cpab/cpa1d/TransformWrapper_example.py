@@ -5,6 +5,7 @@ Created on Sat Feb 21 23:07:06 2015
 Author: Oren Freifeld
 Email: freifeld@csail.mit.edu
 """
+import numpy as np
 import pylab 
 from pylab import plt
 from of.utils import *
