@@ -16,7 +16,7 @@ from cpab.cpaNd import CpaCalcs as CpaCalcsNd
  
 
 from of.utils import ipshell
-from pyvision.essentials import *
+#from pyvision.essentials import *
 from pylab import plt
  
  
