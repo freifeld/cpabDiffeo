@@ -439,7 +439,7 @@ class TransformWrapper(TransformWrapperNd):
                     pts_at_T=CpuGpuArray.zeros_like(pts_at_0)                          
                     self.calc_T_fwd(pts_src=pts_at_0,                              
                               pts_fwd=pts_at_T,
-                              level=level,verbose=0,int_quality=1) 
+                              level=level,int_quality=1) 
                     if self.nCols != self.nCols:
                                     raise NotImplementedError 
                     pts_at_T.gpu2cpu()
