@@ -47,16 +47,21 @@ def example(base=[5],
         cpa_space = tw.ms.L_cpa_space[level]
         Avees = cpa_space.Avees
         velTess = cpa_space.zeros_velTess()
-    
+        
         if use_local_basis:
             if 0:
                 tw.sample_gaussian_velTess(level,Avees,velTess,mu=None) 
                 Avees*=0.001
                 velTess*=0.001  
             else:
-                velTess[:]=10*np.random.standard_normal(velTess.shape)
-                cpa_space.velTess2Avees(velTess=velTess,Avees=Avees)
-                  
+                
+                if not zero_v_across_bdry[0]:
+                    velTess[:]=10*np.random.standard_normal(velTess.shape)
+                    cpa_space.velTess2Avees(velTess=velTess,Avees=Avees)
+                else:
+                    velTess[1:-1]=10*np.random.standard_normal(velTess[1:-1].shape)
+                    cpa_space.velTess2Avees(velTess=velTess,Avees=Avees)
+                    
             cpa_space.velTess2Avees(velTess=velTess,Avees=Avees)  
             
         else:
@@ -97,7 +102,7 @@ def example(base=[5],
 if __name__ == '__main__':    
     tw = example()
     # More examples:
-    
+#    tw = example(nLevels=1,base=[2],zero_v_across_bdry=[False])
 #    tw = example(base=[1])# Will fail (as it should) -- 1 cell plus the default
                            # bdry conditions means there are not DoF.
 #    tw = example(base=[2])
