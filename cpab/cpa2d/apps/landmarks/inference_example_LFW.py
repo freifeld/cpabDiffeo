@@ -10,10 +10,6 @@ import cv2
 
 import pylab
 
-#from pylab import get_current_fig_manager
-#import matplotlib
-#graphics_backend=pylab.matplotlib.backends.backend
-
 from pylab import plt
 plt.close('all')
 from of.gpu import CpuGpuArray
@@ -66,12 +62,6 @@ tf = TransformationFitter(nRows=options.nRows,
 tw = tf.tw
 
 
-#
-#cpa_space = tw.ms.L_cpa_space[-1]
-#tw.create_grid_lines(step=0.1,factor=2./4)
-
-
-
 
 tf.set_dense()       
 
@@ -101,5 +91,4 @@ Pkl.dump(fname_results,tosave,override=True)
 if not inside_spyder():       
     raw_input("Press Enter to exit")    
     
-        
-   
+    
