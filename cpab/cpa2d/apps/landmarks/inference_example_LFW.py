@@ -6,8 +6,6 @@ Author: Oren Freifeld
 Email: freifeld@csail.mit.edu
 """
 import numpy as np
-import cv2
-
 import pylab
 
 from pylab import plt
