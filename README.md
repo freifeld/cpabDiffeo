@@ -80,8 +80,8 @@ python cpa2d/TransformWrapper_example.py  # 2d
 python cpa3d/TransformWrapper_example.py  # 3d 
 
 ```
-The **example** function in either of these files takes several input arguments whose values you can change. 
-You can do it either directly from python, as is done in the commented-out examples at the end of each these three scripts,
+The **example** function in each of these scripts takes several input arguments whose values you can change. 
+You can do it either directly from python, as is done in the commented-out examples at the end of each of these scripts,
 or (in the 2D case) from the terminal using the following script:
 ```
 python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default parameters
