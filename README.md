@@ -66,9 +66,9 @@ git clone git@github.com:freifeld/cpabDiffeo.git
 Second, assuming you cloned this repository as well the **of** and **pyimg** repositories in your home directory (marked as ~), you
 will need to adjust your PYTHONPATH accordingly:
 ```
-# To enable you import both the of and pyimg packages which are in ~
+# To enable importing of both the "of" and "pyimg" packages which are in ~
 export PYTHONPATH=$PYTHONPATH:$~    
-# To enable you import the cpab package which is inside ~/cpabDiffeo
+# To enable  improting of the "cpab" package which is inside ~/cpabDiffeo
 export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/  
 ```
 That's it. You should be good to go.
