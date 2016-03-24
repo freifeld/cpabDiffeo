@@ -88,7 +88,7 @@ python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default 
 ```
 Details about how to pass user-defined arguments using the terminal can be found [here](README_cmdline_options.md).
 
-To run an example for landmark-based inference:
+To run an example of *landmark-based inference*:
 ```
  python cpa2d/apps/landmarks/inference_example_LFW.py
 ```
@@ -97,7 +97,4 @@ To visualize the inference results:
 python cpa2d/apps/landmarks/visualize_results_LFW.py
 ```
 
-
-
-
-
+TODO: add instructions for how to run the example for image registration.
