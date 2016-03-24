@@ -6,7 +6,7 @@ This Python+CUDA implementation is based on our paper, [\[Freifeld et al., ICCV 
 For example, while the ICCV paper discusses only $R^n$ for n=1,2,3, the implementation here also supports higher values of $n$ (as to be expected, both the dimensionality of the representation and integration computing time increase with $n$ and thus values of $n$ that are too high will be impractical in terms of memory, inference, running time, etc.).
 It also contains additional types of tessellations and bases. There are pros and cons for each choice.
 
-**We have just released an [preprint](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016.pdf) (that
+**In March 2016 we released a [preprint](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016.pdf) (that
 extends our ICCV paper) which covers these options.** The supplemental material for this preprint is available [here](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016_supmat.pdf).
 
 Finally, you may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one I will maintain here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
