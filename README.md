@@ -79,42 +79,12 @@ python cpa3d/TransformWrapper_example.py  # 3d
 
 ```
 The **example** function in either of these files takes several input arguments whose values you can change. 
-You can do it either directly from python, e.g.  (these commented-out examples are taken from the end of **cpa2d/TransformWrapper_example.py**):
-```
-#    Here are some other options you may want to try.
-#    You can also try to combine these options, but note
-#    that few of these combinations are invalid -- in which case 
-#    an Exception will be thrown.
-#    tw = example(tess='II') # OK
-#    tw = example(nLevels=2) # OK
-#    tw = example(base=[2,3]) # OK
-#    tw = example(vol_preserve=True) # OK
-#    tw = example(zero_v_across_bdry=[1,1],valid_outside=True) # Will fail (as it should)
-#    tw = example(zero_v_across_bdry=[1,1]) # Will also fail, since valid_outside defaults to True
-#    tw = example(zero_v_across_bdry=[1,1],valid_outside=False)  # OK
-#    tw = example(tess='II',zero_v_across_bdry=[1,1]) # Will fail (as it should) 
-                                                      # as there are too many constraints
-                                                      # The problem is that base=[1,1]
-                                                      # means we have only one cell, 
-                                                      # so with the added boundary constraints. 
-                                                      # there are no degrees of freedom.
-#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[1,2]) # OK
-#    tw = example(tess='II',zero_v_across_bdry=[1,1],base=[2,2]) # OK
-#    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True) # Will fail; no DoF.
-#    tw =example(zero_v_across_bdry=[1,1],valid_outside=False,vol_preserve=True,base=[1,2]) # OK
-#     For the effect of scale_spatial on the prior's smoothness, compare the following two lines
-#    tw = example(scale_spatial=.01,base=[4,4],nLevels=1) # OK
-#    tw = example(scale_spatial=10,base=[4,4],nLevels=1) # OK
-#     For the effect of scale_value on the prior's variance, compare the following two lines
-#    tw = example(scale_value=100.0,base=[4,4],nLevels=1) # OK
-#    tw = example(scale_value=300.0,base=[4,4],nLevels=1) # OK
-```
+You can do it either directly from python, as is done in the commented-out examples at the end of each these three scripts,
 or (in the 2D case) from the terminal using the following script:
 ```
 python cpa2d/TransformWrapper_example_cmdline.py   # This will just use default parameters
 ```
-More details about how to pass different arguments using the terminal option can be found in 
-TBD
+Details about how to pass user-defined arguments using the terminal can be found [here](README_cmdline_options.md).
 
 To run an example for landmark-based inference:
 ```
