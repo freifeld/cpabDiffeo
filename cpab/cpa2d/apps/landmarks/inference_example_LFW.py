@@ -83,7 +83,16 @@ tosave = {'tw_args':inference_record.tw_args,
 tosave = Bunch(**tosave)
 Pkl.dump(fname_results,tosave,override=True)
 
-
+if 1:
+    from disp import disp
+    tw.create_grid_lines(step=0.1,factor=0.5)
+    src=data.src
+    dst=data.dst
+    transformed=CpuGpuArray.zeros_like(src)
+    scale_quiver=1000 # The *smaller* this value is, the larger the plotted arrows will be.
+    level=-1 # pick the finest scale
+    disp(tw=tw,theta=theta_est,src=src,dst=dst,transformed=transformed,level=level,
+         use_subplots=1,scale_quiver=scale_quiver)
 
 
 if not inside_spyder():       
