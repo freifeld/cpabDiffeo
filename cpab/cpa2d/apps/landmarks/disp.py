@@ -85,7 +85,7 @@ def disp(tw,theta,src,dst,transformed,level,use_subplots,
    
     tw.quiver(scale=scale_quiver,
               ds=min([tw.nCols,tw.nRows])/32)
-    
+    plt.title(r'$v$')
     if any(tw.args.zero_v_across_bdry):
         tw.config_plt(axis_on_or_off='on')
     else:
@@ -100,10 +100,12 @@ def disp(tw,theta,src,dst,transformed,level,use_subplots,
     f(h)
     c()
     tw.imshow_vx()
+    plt.title(r'$v_x$')
     h=336        
     f(h)
     c()
     tw.imshow_vy()
+    plt.title(r'$v_y$')
 
  
     h=337        
