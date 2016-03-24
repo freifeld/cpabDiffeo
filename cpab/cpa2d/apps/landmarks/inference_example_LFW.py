@@ -91,6 +91,20 @@ if 1:
     transformed=CpuGpuArray.zeros_like(src)
     scale_quiver=1000 # The *smaller* this value is, the larger the plotted arrows will be.
     level=-1 # pick the finest scale
+    
+    cpa_space = tw.ms.L_cpa_space[level]
+    cpa_space.theta2Avees(theta_est)
+    cpa_space.update_pat() 
+    tw.calc_T_fwd(src,transformed,level=level)
+    transformed.gpu2cpu()
+    tw.calc_v(level=level)
+    tw.v_dense.gpu2cpu()    
+    
+    disp(tw=tw,theta=theta_est,src=src,dst=dst,transformed=transformed,level=level,
+         use_subplots=1,scale_quiver=scale_quiver)
+    
+    
+    
     disp(tw=tw,theta=theta_est,src=src,dst=dst,transformed=transformed,level=level,
          use_subplots=1,scale_quiver=scale_quiver)
 
