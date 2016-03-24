@@ -9,6 +9,8 @@ import numpy as np
 from of.utils import ipshell
 def create_grid_lines(XMINS,XMAXS,step=0.1,use_a_smaller_region=False,
                       factor=1):
+    if factor<=0:
+        raise ValueError(factor)
     xmin,ymin=XMINS
     xmax,ymax=XMAXS
     Nx = xmax-xmin

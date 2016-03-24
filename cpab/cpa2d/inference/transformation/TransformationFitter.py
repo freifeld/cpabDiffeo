@@ -186,12 +186,14 @@ class TransformationFitter(object):
         return theta.copy(),inference_record
 
 
-    def disp(self,sampler):
+    def disp(self,sampler,ds_quiver=None):
         
         level=sampler.level    
         theta=sampler.theta_current
         tw=self.tw
         scale_quiver=self.scale_quiver
+        if ds_quiver is None:
+            ds_quiver=min([tw.nCols,tw.nRows])/32
         
         markersize = 4
         fontsize=30
@@ -258,7 +260,8 @@ class TransformationFitter(object):
         
         plt.subplot(234)
         
-        tw.quiver(scale=scale_quiver)
+        tw.quiver(scale=scale_quiver,ds=ds_quiver)
+#        1/0
 #        cpa_space.plot_cells()
         
 #        if TF.use_hand_data == False:

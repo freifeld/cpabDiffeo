@@ -12,10 +12,12 @@ from scipy.sparse.linalg import expm
 import numpy as np
 from multiprocessing import Pool
 
-from expm_affine_2D import expm_affine_2D
-from expm_affine_2D import expm_affine_2D_multiple
-from expm_affine_3D import expm_affine_3D_multiple
-
+try:
+    from expm_affine_2D import expm_affine_2D
+    from expm_affine_2D import expm_affine_2D_multiple
+    from expm_affine_3D import expm_affine_3D_multiple
+except ImportError:
+    pass
  
 
 
