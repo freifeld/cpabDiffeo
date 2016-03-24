@@ -105,9 +105,7 @@ class TransformationFitter(object):
         
 
         #############################
-        for i in range(nLevels):   
-#        for i in range(nLevels+5): 
-        
+        for i in range(nLevels): 
             if i<nLevels:
                 level=i
                 if level == 0:
