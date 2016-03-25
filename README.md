@@ -41,6 +41,7 @@ Coming soon: More options (dim>3, more options for inference, more options for t
 ## Requirements
 - generic python packages: numpy; scipy; matplotlib
 - opencv with python's bindings
+- CUDA
 - pycuda
 - My **of** and **pyimg** packages:
 ```
