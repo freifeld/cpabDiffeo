@@ -31,8 +31,8 @@ class Options(object):
     def __init__(self,name):
         name = name.lower()
         self.axis_ij=True        
-        self.nCols=256 # TODO: find out what was the acutal size
-        self.nRows=256 # TODO: find out what was the acutal size
+        self.nCols=250 
+        self.nRows=250 
     
 options = Options(name)    
     
