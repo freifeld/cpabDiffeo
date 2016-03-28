@@ -85,7 +85,8 @@ class CpaSpace(CpaSpaceNd):
 
 
 
-        try:            
+        try:    
+#            FilesDirs.raise_if_file_does_not_exist('Fake Name')
             subspace=Pkl.load(self.filename_subspace,verbose=1)
             B=subspace['B']
             nConstraints=subspace['nConstraints']
@@ -127,7 +128,7 @@ class CpaSpace(CpaSpaceNd):
                 Lx = create_cont_constraint_mats(H,v1,v2,v3,v4,nSides,nConstraints,
                                                    nC,dim_domain=self.dim_domain,
                                                    dim_range=self.dim_range,tess=tess)
-                                                   
+                     
             if len(zero_vals): 
                 Lzerovals = create_constraint_mat_zerovals(nC,dim_domain=self.dim_domain,
                                                            dim_range=self.dim_range,
@@ -182,7 +183,7 @@ class CpaSpace(CpaSpaceNd):
                 if cont_constraints_are_separable: # to solve a nuch smaller SVD and to get a sparser basis                  
                     if vol_preserve or any(zero_v_across_bdry):
                         raise NotImplementedError
-                    B1=null(Lx)            
+                    B1=null(Lx)   
                     # B1.shape is (nC*nHomoCoo)x dim_null_space
                     
                     if debug_cont_constraints_are_separable:
