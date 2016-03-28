@@ -31,12 +31,14 @@ This software is released under the MIT License (included with the software). No
 ```
 
 ## Versions
+- 03/28/2016, Version 0.0.5  -- Basic support for dim > 3
 - 03/24/2016, Version 0.0.4  -- Simple Landmark-based inference in 2D.
 - 03/21/2016, Version 0.0.3  -- Synthesis in 3D.
 - 03/16/2016, Version 0.0.2  -- 1) synthesis in 1D; 2) simple 2D image regiration (intensity-based Gaussian likelihood + MCMC inference)
 - 03/15/2016, Version 0.0.1  -- First release (synthsis in 2D).
 
-Coming soon: More options (dim>3, more options for inference, more options for the prior, handling landmarks, more applications, etc). 
+## Coming soon: 
+More options for inference, more options for the prior, handling landmarks and registration in all dimensions, more applications, etc. 
 
 ## Requirements
 - generic python packages: numpy; scipy; matplotlib
