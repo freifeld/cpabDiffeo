@@ -16,7 +16,7 @@ from cpab.cpaNd.utils import null
 from cpab.cpa3d.utils import *  
 
 from cpab.cpa3d.Tessellation import Tessellation
-from scipy.linalg import block_diag
+#from scipy.linalg import block_diag
  
 class CpaSpace(CpaSpaceNd):
     dim_domain=3
@@ -39,8 +39,30 @@ class CpaSpace(CpaSpaceNd):
                 raise ValueError("tess='I' so you must pass valid_outside=True/False" )
             self.valid_outside=valid_outside                     
 
+        nCx,nCy,nCz=map(int,nCs)
         
-                
+        cont_constraints_are_separable=True
+        debug_cont_constraints_are_separable=False
+        
+        
+        if cont_constraints_are_separable: 
+            # Check if can actually use separable continuity:
+            if any(zero_v_across_bdry):
+                cont_constraints_are_separable=False
+            if vol_preserve:
+                cont_constraints_are_separable=False   
+            if nCx!=nCy or nCx!=nCz:
+                cont_constraints_are_separable=False
+            if XMINS[0]!=XMINS[1] or XMINS[0]!=XMINS[2]:
+                cont_constraints_are_separable=False
+            if XMAXS[0]!=XMAXS[1] or XMAXS[0]!=XMAXS[2]:
+                cont_constraints_are_separable=False
+            if not cont_constraints_are_separable:
+                debug_cont_constraints_are_separable=False
+                print '\nCould not use separable continuity.\n'
+            else:
+                print '\nWill use separable continuity.\n'
+        
         super(CpaSpace,self).__init__(XMINS,XMAXS,nCs,
                  zero_v_across_bdry,
                  vol_preserve=vol_preserve,
@@ -48,12 +70,11 @@ class CpaSpace(CpaSpaceNd):
                  zero_vals=zero_vals,cpa_calcs=cpa_calcs,
                  tess=tess,
                  valid_outside=valid_outside,
-                 only_local=only_local)                                     
+                 only_local=only_local,
+                 cont_constraints_are_separable=cont_constraints_are_separable)                                     
                         
-        nCx,nCy,nCz=map(int,nCs)        
-#        self.nCx=nCx
-#        self.nCy=nCy   
-#        self.nCz=nCz                
+               
+              
 #        
 #        cells_multiidx,cells_verts=create_cells(nCx,nCy,nCz,
 #                                                self.nC,self.XMINS,self.XMAXS,tess=tess)                                                                                                                                                                                                                  
@@ -61,16 +82,16 @@ class CpaSpace(CpaSpaceNd):
         
         tessellation = Tessellation(nCx,nCy,nCz,self.nC,self.XMINS,self.XMAXS,tess=tess)
         self.tessellation=tessellation        
-#        ipshell('hi') 
-#        1/0
-        try:
-#            raise FileDoesNotExistError("FAKE NAME")
+
+
+
+        try:            
             subspace=Pkl.load(self.filename_subspace,verbose=1)
             B=subspace['B']
             nConstraints=subspace['nConstraints']
             nSides=subspace['nSides']
             constraintMat=subspace['constraintMat']
-            separable_basis=subspace['separable_basis']
+            cont_constraints_are_separable=subspace['cont_constraints_are_separable']
 #            cells_verts =np.asarray(cells_verts)   
             
         except FileDoesNotExistError:    
@@ -95,21 +116,14 @@ class CpaSpace(CpaSpaceNd):
 #                raise ValueError                                                  
         
             
-#            cells_verts =np.asarray(cells_verts)      
              
-            separable_basis=True
-            debug_separable_basis=False
-            if any(zero_v_across_bdry):
-                separable_basis=False
-            if vol_preserve:
-                separable_basis=False
-#            raise ValueError(separable_basis,debug_separable_basis)
+
             
-            if separable_basis == False or debug_separable_basis:                                    
+            if cont_constraints_are_separable == False or debug_cont_constraints_are_separable:                                    
                 L = create_cont_constraint_mat(H,v1,v2,v3,v4,nSides,nConstraints,
                                                    nC,dim_domain=self.dim_domain,
                                                    dim_range=self.dim_range,tess=tess)   
-            if separable_basis:
+            if cont_constraints_are_separable:
                 Lx = create_cont_constraint_mats(H,v1,v2,v3,v4,nSides,nConstraints,
                                                    nC,dim_domain=self.dim_domain,
                                                    dim_range=self.dim_range,tess=tess)
@@ -156,7 +170,7 @@ class CpaSpace(CpaSpaceNd):
             
             
             
-            if not separable_basis:
+            if not cont_constraints_are_separable:
                 try:
                     B=null(L)     
                 except:
@@ -165,13 +179,13 @@ class CpaSpace(CpaSpaceNd):
                     print '---------------------'
                     raise
             else:
-                if separable_basis: # to solve a nuch smaller SVD and to get a sparser basis                  
+                if cont_constraints_are_separable: # to solve a nuch smaller SVD and to get a sparser basis                  
                     if vol_preserve or any(zero_v_across_bdry):
                         raise NotImplementedError
                     B1=null(Lx)            
                     # B1.shape is (nC*nHomoCoo)x dim_null_space
                     
-                    if debug_separable_basis:
+                    if debug_cont_constraints_are_separable:
                         B=null(L)
                         if B1.shape[0]!=B.shape[0]/3:
                             raise ValueError(B1.shape,B.shape)
@@ -188,15 +202,14 @@ class CpaSpace(CpaSpaceNd):
                             _B[:,j+k*B1.shape[1]]=arr4
                     B=_B
             
-#           print np.linalg.matrix_rank(_B)
 
 #           
             
 #            2/0
-            if separable_basis:
+            if cont_constraints_are_separable:
                 L=Lx
             constraintMat=sparse.csr_matrix(L)
-            Pkl.dump(self.filename_subspace,{'B':B,'separable_basis':separable_basis,
+            Pkl.dump(self.filename_subspace,{'B':B,'cont_constraints_are_separable':cont_constraints_are_separable,
                                              'nConstraints':nConstraints,
                                              'nSides':nSides,
                                              'constraintMat':constraintMat},
@@ -212,7 +225,7 @@ class CpaSpace(CpaSpaceNd):
                                              nIterfaces=nSides,
                                              B=B,zero_vals=zero_vals)
 
-        self.separable_basis=separable_basis
+        self.cont_constraints_are_separable=cont_constraints_are_separable
 
 
         

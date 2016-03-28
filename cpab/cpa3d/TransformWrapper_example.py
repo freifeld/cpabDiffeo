@@ -29,7 +29,6 @@ def example(tess='I',base=[1,1,2],nLevels=2,
            use_mayavi=False,
            eval_v=False,
            eval_cell_idx=False):  
-    
      
     tw = TransformWrapper(nRows=nRows,
                           nCols=nCols,
@@ -233,13 +232,14 @@ def example(tess='I',base=[1,1,2],nLevels=2,
      
     return tw
 if __name__ == "__main__": 
-    tw = example()
+#    tw = example()
 
     # The following line should fail, since there are not DoF.
     #tw = example(base=[1,1,1],nLevels=1,tess='II',zero_v_across_bdry=[True]*3) 
 
 #    tw = example(base=[1,1,1],nLevels=1,tess='II',zero_v_across_bdry=[False]*3) 
-    #tw = example(base=[2,2,2],nLevels=1,tess='II',zero_v_across_bdry=[True]*3) 
+#    tw = example(base=[1,1,1],nLevels=2,tess='II',zero_v_across_bdry=[False]*3) 
+#    tw = example(base=[2,2,2],nLevels=1,tess='II',zero_v_across_bdry=[True]*3) 
 #    tw = example(base=[2,2,2],nLevels=3,tess='II',zero_v_across_bdry=[True]*3) 
 
 #    tw = example(base=[2,2,2],nLevels=1)

@@ -71,7 +71,8 @@ class CpaSpace(object):
                  cpa_calcs=None,
                  tess='II',
                  valid_outside=None,
-                 only_local=False):
+                 only_local=False,
+                 cont_constraints_are_separable=False):
         if conformal:
             raise ValueError("This was a bad idea")
         if not self.has_GPU:
@@ -217,7 +218,8 @@ class CpaSpace(object):
                                                          warp_around,
                                                          conformal,
                                                          zero_vals,
-                                                         valid_outside=valid_outside)
+                                                         valid_outside=valid_outside,
+                                                         cont_constraints_are_separable=cont_constraints_are_separable)
                                                                 
         self.directory = os.path.join(dirnames.cpa,'{0}d'.format(self.dim_domain),
                                               self.subspace_string)                                                         
@@ -507,7 +509,8 @@ class CpaSpace(object):
                                warp_around,
                                conformal,
                                zero_vals,
-                               valid_outside):    
+                               valid_outside,
+                               cont_constraints_are_separable):    
         if conformal:
             raise ValueError("This was a bad idea",conformal)
         XMINS=np.asarray(XMINS)
@@ -518,6 +521,7 @@ class CpaSpace(object):
         warp_around = np.asarray(warp_around)                          
         dim_domain=self.dim_domain
         dim_range=self.dim_range
+        sep_cont=cont_constraints_are_separable
         s=''
         if self.dim_domain>1:
             s+='tess'+str(self.tess)+'_'
@@ -537,7 +541,8 @@ class CpaSpace(object):
             s+='_vp'      
         if self.tess=='I' and self.dim_domain ==2:
             s+='_ext_{}'.format(int(valid_outside))
-            
+        if sep_cont:
+            s+='_sepcont'
         
         return s     
     def calc_cell_idx(self,pts,cell_idx):
