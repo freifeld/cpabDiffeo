@@ -171,18 +171,11 @@ class CpaSpace(CpaSpaceNd):
         super(CpaSpace,self).__finish_init__(tessellation=tessellation,
                                              constraintMat=constraintMat,
                                              nConstraints=nConstraints,
-                                             nIterfaces=nEdges,
+                                             nInterfaces=nEdges,
                                              B=B,zero_vals=zero_vals) 
                 
                    
-            # MOVED THIS TO TESSELLATION.PY                   
-#        _xmins=self.cells_verts[:,:,0].min(axis=1)
-#        _ymins=self.cells_verts[:,:,1].min(axis=1)
-#        _xmaxs=self.cells_verts[:,:,0].max(axis=1)
-#        _ymaxs=self.cells_verts[:,:,1].max(axis=1)
-#        self._xmins = np.asarray(zip(_xmins,_ymins))
-#        self._xmaxs = np.asarray(zip(_xmaxs,_ymaxs))
-#        
+  
         
        
                      

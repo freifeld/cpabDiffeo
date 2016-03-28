@@ -231,7 +231,7 @@ class CpaSpace(object):
 
     def __finish_init__(self,
                         tessellation,
-                        constraintMat,nConstraints,nIterfaces,
+                        constraintMat,nConstraints,nInterfaces,
 #                        cells_multiidx,
 #                    cells_verts,
                     B,zero_vals):
@@ -245,7 +245,7 @@ class CpaSpace(object):
                 raise ValueError("tess='{}' but self.local_stuff is None".format(self.tess))
         self.constraintMat=constraintMat
         self.nConstraints=nConstraints  
-        self.nIterfaces=nIterfaces             
+        self.nInterfaces=nInterfaces             
         self.B=B
         
         if B is not None:

@@ -116,7 +116,7 @@ class CpaSpace(CpaSpaceNd):
                      tessellation=tessellation,
                         constraintMat=constraintMat,
                         nConstraints=nConstraints,
-                        nIterfaces=nEdges,B=B,zero_vals=[])        
+                        nInterfaces=nEdges,B=B,zero_vals=[])        
         if self.local_stuff is None:
             raise ValueError("WTF?")
 

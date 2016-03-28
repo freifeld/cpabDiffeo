@@ -602,8 +602,10 @@ class Calcs:
             calc_T_gpu(
               pts0.gpu,
               pos.gpu,
-              drv.In(Tlocals_vectorized),  
-              drv.In(signedAs_vectorized),      
+#              drv.In(Tlocals_vectorized),  
+#              drv.In(signedAs_vectorized),
+              Tlocals_vectorized.gpu,  
+              signedAs_vectorized.gpu,  
               self.my_dtype(dt),
               np.int32(nTimeSteps),
               np.int32(nStepsOdeSolver),

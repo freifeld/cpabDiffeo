@@ -55,7 +55,10 @@ def decide_sharedmemory(dim_domain,dim_range,nC):
         else:
             raise NotImplementedError(computer.has_good_gpu_card, dim_domain,  nC)
     else:
-        raise NotImplementedError(computer.has_good_gpu_card, dim_domain,  nC)
+        sharedmemory=0  # Presumably for some values we should still be able
+                        # to use shared memory, but for now I don't have time
+                        # to look into it.
+        
     return sharedmemory        
             
 

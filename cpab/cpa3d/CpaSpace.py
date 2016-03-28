@@ -41,8 +41,6 @@ class CpaSpace(CpaSpaceNd):
 
         nCx,nCy,nCz=map(int,nCs)
         
-        cont_constraints_are_separable=True
-        debug_cont_constraints_are_separable=False
         
         
         if cont_constraints_are_separable: 
@@ -72,13 +70,6 @@ class CpaSpace(CpaSpaceNd):
                  valid_outside=valid_outside,
                  only_local=only_local,
                  cont_constraints_are_separable=cont_constraints_are_separable)                                     
-                        
-               
-              
-#        
-#        cells_multiidx,cells_verts=create_cells(nCx,nCy,nCz,
-#                                                self.nC,self.XMINS,self.XMAXS,tess=tess)                                                                                                                                                                                                                  
-#    
         
         tessellation = Tessellation(nCx,nCy,nCz,self.nC,self.XMINS,self.XMAXS,tess=tess)
         self.tessellation=tessellation        
@@ -93,7 +84,6 @@ class CpaSpace(CpaSpaceNd):
             nSides=subspace['nSides']
             constraintMat=subspace['constraintMat']
             cont_constraints_are_separable=subspace['cont_constraints_are_separable']
-#            cells_verts =np.asarray(cells_verts)   
             
         except FileDoesNotExistError:    
             nC = self.nC
@@ -101,25 +91,8 @@ class CpaSpace(CpaSpaceNd):
 
             v1,v2,v3,v4,H,nSides,nConstraints = self.tessellation.create_verts_and_H(
                 dim_range=self.dim_range,valid_outside=valid_outside)            
-#            if tess == 'II':
-#                v1,v2,v3,v4,H,nSides,nConstraints = create_verts_and_H(self.nC,
-#                                                              cells_multiidx, cells_verts,
-#                                                              dim_domain=self.dim_domain,                                                 
-#                                                              dim_range=self.dim_range)
-#            elif tess == 'I':    
-#                
-#                v1,v2,v3,v4,H,nSides,nConstraints = create_verts_and_H_tri(self.nC,
-#                                                              cells_multiidx, cells_verts,
-#                                                              dim_domain=self.dim_domain,                                                 
-#                                                              dim_range=self.dim_range,
-#                                                              valid_outside=valid_outside)                
-#            else:
-#                raise ValueError                                                  
-        
-            
+                                           
              
-
-            
             if cont_constraints_are_separable == False or debug_cont_constraints_are_separable:                                    
                 L = create_cont_constraint_mat(H,v1,v2,v3,v4,nSides,nConstraints,
                                                    nC,dim_domain=self.dim_domain,
@@ -223,7 +196,7 @@ class CpaSpace(CpaSpaceNd):
         super(CpaSpace,self).__finish_init__(tessellation=tessellation,
                                              constraintMat=constraintMat,
                                              nConstraints=nConstraints,
-                                             nIterfaces=nSides,
+                                             nInterfaces=nSides,
                                              B=B,zero_vals=zero_vals)
 
         self.cont_constraints_are_separable=cont_constraints_are_separable
@@ -409,7 +382,6 @@ if __name__=="__main__":
     
     
     np.random.seed(0)     
-    theta = np.random.multivariate_normal(mean=mu,cov=cpa_covs.cpa_cov)
 #    theta *= 4
 #    
 

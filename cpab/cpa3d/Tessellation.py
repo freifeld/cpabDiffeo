@@ -5,19 +5,12 @@ Created on Mon Mar  7 11:48:11 2016
 Author: Oren Freifeld
 Email: freifeld@csail.mit.edu
 """
-
-
-
-
 import numpy as np
 from of.utils import ipshell
-from scipy import sparse
+#from scipy import sparse
 
 from cpab.cpaNd import Tessellation as  TessellationNd
 
-#def make_it_hashable(arr):
-#   return tuple([tuple(r.tolist()) for r in arr]) 
-#   
 class Tessellation(TessellationNd):
     dim_domain = 3
     _LargeNumber = 10**6

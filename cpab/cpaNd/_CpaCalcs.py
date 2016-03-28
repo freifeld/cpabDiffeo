@@ -19,6 +19,9 @@ import pycuda.driver as drv
 from cpab.gpu.expm.expm_affine_by_series_2D import gpu_expm as gpu_expm2d
 from cpab.gpu.expm.expm_affine_by_series_3D import gpu_expm as gpu_expm3d
 
+#from cpab.gpu.expm.expm_affine_by_series_ND import gpu_expm as gpu_expmNd
+
+
 
 def debug_reshape(Tlocals,signed_sqAs,nC):
                 return ( Tlocals[:,:-1].reshape(nC,-1).copy(),
@@ -322,8 +325,27 @@ class CpaCalcs(object):
                     gpu_expm3d(signed_As_times_dt_vectorized,Tlocals_vectorized)  
                     if timer:
                         timer.expm_gpu.toc()    
-                else:                    
+                else:  
+                    # TODO: the gpu version
+                    n=pa_space.dim_domain                    
+                    signed_As_times_dt_vectorized.gpu2cpu()
+#                    
+                    signed_sqAs_times_dt=np.zeros((nC,n+1,n+1))
+                    Tlocals=np.zeros((nC,n+1,n+1))
+                    np.copyto(dst=signed_sqAs_times_dt[:,:-1,:],
+                              src=signed_As_times_dt_vectorized.cpu.reshape(nC,n,n+1))
                     pa_space.expm_eff.calc(signed_sqAs_times_dt,Tlocals)
+                    
+                    # ignore numerics
+                    Tlocals[:,-1,:-1]=0
+                    Tlocals[:,-1,-1]=1
+                    
+                    np.copyto(dst=Tlocals_vectorized.cpu,
+                              src=Tlocals[:,:-1,:].reshape(nC,-1))
+                    Tlocals_vectorized.cpu2gpu()
+#                    ipshell('hi')
+
+#                    gpu_expmHd(signed_As_times_dt_vectorized,Tlocals_vectorized)  
                 
                 
                 

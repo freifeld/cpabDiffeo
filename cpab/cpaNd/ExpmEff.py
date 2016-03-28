@@ -52,6 +52,8 @@ class ExpmEff(object):
             (nC stands for the number of cells)
         
         """
+        if Ts.shape!=As.shape:
+            raise ValueError(As.shape,Ts.shape)
         Ts[:]=self._pool.map(expm,As)  
         #np.copyto(Ts,self._pool.map(expm,As))
     def calc(self,As,Ts,use_parallel=False):
