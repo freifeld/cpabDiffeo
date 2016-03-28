@@ -8,7 +8,7 @@ Email: freifeld@csail.mit.edu
 
 import numpy as np
 from of.utils import ipshell
-def create_cont_constraint_mats(H,v1s,v2s,v3s,v4s,nSides,nConstraints,nC,
+def create_cont_constraint_mat_separable(H,v1s,v2s,v3s,v4s,nSides,nConstraints,nC,
                                dim_domain,dim_range,tess):    
     """
     L is the matrix that encodes the constraints of the consistent subspace.
@@ -21,7 +21,6 @@ def create_cont_constraint_mats(H,v1s,v2s,v3s,v4s,nSides,nConstraints,nC,
     if dim_range not in [1,3]:
         raise ValueError
     nHomoCoo=dim_domain+1        
-#    length_Avee = dim_domain*nHomoCoo
     length_Avee = dim_range*nHomoCoo
     L1 = np.zeros((nConstraints/3,nC*nHomoCoo))
 

@@ -543,11 +543,7 @@ class Tessellation(TessellationNd):
 
         dim_domain=self.dim_domain
         nC = self.nC
-        cells_multiidx=self.cells_multiidx
         cells_verts=self.cells_verts_homo_coo
-        nCx=self.nCx
-        nCy=self.nCy
-        nCz=self.nCz
         
         if dim_domain != 3:
             raise ValueError(self.dim_domain)
@@ -573,8 +569,7 @@ class Tessellation(TessellationNd):
                 e = s+nHomoCoo
                 row = np.zeros(nCols)
                 row[s:e] = v
-                
-                
+                                
                 if zero_vx_across_bdry and v[0] in (xmin,xmax):
                     if verbose:
                         print 'vx', ' cell',i , 'vert ', j
@@ -587,17 +582,61 @@ class Tessellation(TessellationNd):
                     if verbose:
                         print 'vx', ' cell',i , 'vert ', j
                     L.append(np.roll(row,nHomoCoo*2)) 
-                    
-    #            if zero_vx_across_bdry and v[0] in (xmin,xmax):
-    #                if verbose:
-    #                    print 'vx', ' cell',i , 'vert ', j
-    #                L.append(row)    
-    #                 
-    #                              
-    #            if zero_vy_across_bdry and v[1] in (ymin,ymax):
-    #                if verbose:
-    #                    print 'vy', ' cell',i , 'vert ', j
-    #                L.append(np.roll(row,nHomoCoo))
+                           
+        L = np.asarray(L)
+        
+        return L
+
+    def create_constraint_mat_bdry_separable(self,
+                      zero_v_across_bdry,
+                      verbose=False):
+        raise NotImplementedError("""
+        If the condition was zero velocity at the boundary, this would have been trivial to code.
+        But till now we used only "zero normal component at the boundary".
+        So while it is separable, it is slightly more messy. TODO.
+        """
+        )
+        dim_domain=self.dim_domain
+        nC = self.nC
+        cells_verts=self.cells_verts_homo_coo
+        
+        if dim_domain != 3:
+            raise ValueError(self.dim_domain)
+        if len(zero_v_across_bdry)!=3:
+            raise ValueError(zero_v_across_bdry)
+        zero_vx_across_bdry,zero_vy_across_bdry,zero_vz_across_bdry = zero_v_across_bdry
+        
+        xmin,ymin,zmin = self.XMINS
+        xmax,ymax,zmax = self.XMAXS
+        
+        nHomoCoo = dim_domain+1
+        length_Avee = dim_domain*nHomoCoo
+        nCols = nC*length_Avee
+            
+        L = [] 
+        
+        for i,cell in enumerate(cells_verts):
+            for j,v in enumerate(cell):            
+                # s stands for start
+                # e stands for end
+                
+                s = i*length_Avee 
+                e = s+nHomoCoo
+                row = np.zeros(nCols)
+                row[s:e] = v
+                                
+                if zero_vx_across_bdry and v[0] in (xmin,xmax):
+                    if verbose:
+                        print 'vx', ' cell',i , 'vert ', j
+                    L.append(row)                       
+                if zero_vy_across_bdry and v[1] in (ymin,ymax):
+                    if verbose:
+                        print 'vy', ' cell',i , 'vert ', j
+                    L.append(np.roll(row,nHomoCoo))
+                if zero_vz_across_bdry and v[2] in (zmin,zmax):
+                    if verbose:
+                        print 'vx', ' cell',i , 'vert ', j
+                    L.append(np.roll(row,nHomoCoo*2)) 
                            
         L = np.asarray(L)
         

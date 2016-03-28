@@ -5,6 +5,5 @@ from cpab.cpaNd.utils import create_constraint_mat_zerovals
 
 
 
-from _create_cont_constraint_mats import create_cont_constraint_mats
-
+from _create_cont_constraint_mat_separable import create_cont_constraint_mat_separable
 

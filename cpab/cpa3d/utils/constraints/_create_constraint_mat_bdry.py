@@ -39,7 +39,6 @@ def create_constraint_mat_bdry(XMINS,XMAXS, cells_x_verts, nC,dim_domain,
             row = np.zeros(nCols)
             row[s:e] = v
             
-            
             if zero_vx_across_bdry and v[0] in (xmin,xmax):
                 if verbose:
                     print 'vx', ' cell',i , 'vert ', j
@@ -52,17 +51,6 @@ def create_constraint_mat_bdry(XMINS,XMAXS, cells_x_verts, nC,dim_domain,
                 if verbose:
                     print 'vx', ' cell',i , 'vert ', j
                 L.append(np.roll(row,nHomoCoo*2)) 
-                
-#            if zero_vx_across_bdry and v[0] in (xmin,xmax):
-#                if verbose:
-#                    print 'vx', ' cell',i , 'vert ', j
-#                L.append(row)    
-#                 
-#                              
-#            if zero_vy_across_bdry and v[1] in (ymin,ymax):
-#                if verbose:
-#                    print 'vy', ' cell',i , 'vert ', j
-#                L.append(np.roll(row,nHomoCoo))
                        
     L = np.asarray(L)
     

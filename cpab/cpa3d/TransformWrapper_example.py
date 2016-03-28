@@ -22,7 +22,7 @@ if not inside_spyder():
      pylab.ion() 
  
     
-def example(tess='I',base=[1,1,2],nLevels=2,
+def example(tess='I',base=[2,2,2],nLevels=1,
             zero_v_across_bdry=[True]*3,
             vol_preserve=False,
            nRows=100, nCols=100,nSlices=100,

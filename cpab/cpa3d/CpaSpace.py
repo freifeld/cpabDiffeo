@@ -31,7 +31,8 @@ class CpaSpace(CpaSpaceNd):
                  zero_vals=[],cpa_calcs=None,
                  tess='II',
                  valid_outside=None,
-                 only_local=False):
+                 only_local=False,
+                 cont_constraints_are_separable=True):
         if tess == 'II' and valid_outside is not None:
             print "tess='II' --> ignoring the value of valid_outside"
         if tess == 'I':
@@ -42,22 +43,27 @@ class CpaSpace(CpaSpaceNd):
         nCx,nCy,nCz=map(int,nCs)
         
         
-        
-        if cont_constraints_are_separable: 
-            # Check if can actually use separable continuity:
+        debug_cont_constraints_are_separable=False
+        if cont_constraints_are_separable:
+            print 'Check if can actually use separable continuity:'
             if any(zero_v_across_bdry):
                 cont_constraints_are_separable=False
+                print 'any(zero_v_across_bdry) is True'
             if vol_preserve:
-                cont_constraints_are_separable=False   
+                cont_constraints_are_separable=False  
+                print 'vol_preserve is True'
             if nCx!=nCy or nCx!=nCz:
                 cont_constraints_are_separable=False
+                print 'nCx!=nCy or nCx!=nCz'
             if XMINS[0]!=XMINS[1] or XMINS[0]!=XMINS[2]:
                 cont_constraints_are_separable=False
+                print 'XMINS[0]!=XMINS[1] or XMINS[0]!=XMINS[2]'
             if XMAXS[0]!=XMAXS[1] or XMAXS[0]!=XMAXS[2]:
                 cont_constraints_are_separable=False
+                print 'XMAXS[0]!=XMAXS[1] or XMAXS[0]!=XMAXS[2]'
             if not cont_constraints_are_separable:
                 debug_cont_constraints_are_separable=False
-                print '\nCould not use separable continuity.\n'
+                print 'so I could not use separable continuity.'
             else:
                 print '\nWill use separable continuity.\n'
         
@@ -98,7 +104,7 @@ class CpaSpace(CpaSpaceNd):
                                                    nC,dim_domain=self.dim_domain,
                                                    dim_range=self.dim_range,tess=tess)   
             if cont_constraints_are_separable:
-                Lx = create_cont_constraint_mats(H,v1,v2,v3,v4,nSides,nConstraints,
+                Lx = create_cont_constraint_mat_separable(H,v1,v2,v3,v4,nSides,nConstraints,
                                                    nC,dim_domain=self.dim_domain,
                                                    dim_range=self.dim_range,tess=tess)
                      
@@ -110,24 +116,15 @@ class CpaSpace(CpaSpaceNd):
                 nConstraints += Lzerovals.shape[0]                               
                 
             if any(zero_v_across_bdry):
-#                raise NotImplementedError  
-#                Lbdry = create_constraint_mat_bdry(XMINS,XMAXS, cells_verts, nC,
-#                                      dim_domain=self.dim_domain,
-#                                      zero_v_across_bdry=self.zero_v_across_bdry)
-#                L = np.vstack([L,Lbdry])
-#                nConstraints += Lbdry.shape[0]
-#               #raise ValueError("I am not sure this is still supported")
-            
-                Lbdry = self.tessellation.create_constraint_mat_bdry(
-                                  zero_v_across_bdry=self.zero_v_across_bdry)
-                
+                if cont_constraints_are_separable == False or debug_cont_constraints_are_separable:  
+                    Lbdry = self.tessellation.create_constraint_mat_bdry(
+                                      zero_v_across_bdry=self.zero_v_across_bdry)
 
-               
-
-#                Lbdry = create_constraint_mat_bdry(XMINS,XMAXS, cells_verts, nC,
-#                                      dim_domain=self.dim_domain,
-#                                      zero_v_across_bdry=self.zero_v_across_bdry)
-                L = np.vstack([L,Lbdry])
+                    L = np.vstack([L,Lbdry])
+                if cont_constraints_are_separable:
+                    Lb = self.tessellation.create_constraint_mat_bdry_separable(
+                                      zero_v_across_bdry=self.zero_v_across_bdry)
+                    raise NotImplementedError(zero_v_across_bdry, cont_constraints_are_separable)
                 nConstraints += Lbdry.shape[0]
             if any(self.warp_around):
                 raise NotImplementedError
