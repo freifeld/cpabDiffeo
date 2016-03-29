@@ -102,7 +102,7 @@ python cpa2d/apps/landmarks/visualize_results_LFW.py
 
 TODO: add instructions for how to run the example for image registration.
 
-To run a monotonic-regression example:
+To run a **monotonic-regression** example:
 ```
 python cpa1d/inference/transformation/MonotonicRegression_example.py
 ```
