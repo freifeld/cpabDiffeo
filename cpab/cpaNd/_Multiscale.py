@@ -185,17 +185,13 @@ class Multiscale(object):
             raise ValueError(sp_coarse.tess , sp_fine.tess)
             
         if self.dim_domain == 1:
-            coarse=Avees_coarse.reshape(sp_coarse.nCx,-1)
-            fine=Avees_fine.reshape(sp_fine.nCx,-1)
-            for i in range(sp_coarse.nCx):              
+            coarse=Avees_coarse.reshape(sp_coarse.tessellation.nCx,-1)
+            fine=Avees_fine.reshape(sp_fine.tessellation.nCx,-1)
+            for i in range(sp_coarse.tessellation.nCx):              
                     fine[2*i]=coarse[i]
                     fine[2*i+1]=coarse[i]                   
-#            ipshell('hi')   
-#            1/0                    
+                  
         elif self.dim_domain == 2:
-#            nCx_fine = sp_fine.nCx
-            
-             
             coarse=Avees_coarse.reshape(sp_coarse.tessellation.nCy,sp_coarse.tessellation.nCx,-1)
             fine=Avees_fine.reshape(sp_fine.tessellation.nCy,sp_fine.tessellation.nCx,-1)
             for i in range(sp_coarse.tessellation.nCy):

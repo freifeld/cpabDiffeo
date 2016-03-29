@@ -1,0 +1,3 @@
+from _ScaleDependentLogLikelihoodGaussian import ScaleDependentLogLikelihoodGaussian
+#from _ScaleDependentLogPrior import ScaleDependentLogPrior
+
