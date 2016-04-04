@@ -96,10 +96,13 @@ __device__ inline int compute_cell_idx(double* p,
  
         // Out of bounds (right)
         if (p[0]>=nC0*inc_x){
+            /* 
             if (p[1]<=0 && -p[1]/inc_y>p[0]/inc_x-nC0){                  
                 cell_idx += 0;              
             }          
-            else if (p[1]>=nC1*inc_y && p[1]/inc_y-nC1>p[0]/inc_x-nC0){
+            else 
+            */ 
+            if (p[1]>=nC1*inc_y && p[1]/inc_y-nC1>p[0]/inc_x-nC0){
                  cell_idx += 2;              
             }          
             else{            

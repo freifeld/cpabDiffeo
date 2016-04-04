@@ -48,7 +48,7 @@ args = parser.parse_args()
 
 # It is better to do this import here than in the in the begining.
 # Otherwise, even calling the -h option can be very slow.
-from TransformWrapper_example_usage import example
+from TransformWrapper_example import example
 from of.utils import inside_spyder
 tw=example(**args.__dict__)
 if not inside_spyder():
