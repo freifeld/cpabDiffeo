@@ -34,7 +34,7 @@ This software is released under the MIT License (included with the software). No
 - 03/28/2016, Version 0.0.5  -- Basic support for dim > 3; monotonic regression (in 1D)
 - 03/24/2016, Version 0.0.4  -- Simple Landmark-based inference in 2D.
 - 03/21/2016, Version 0.0.3  -- Synthesis in 3D.
-- 03/16/2016, Version 0.0.2  -- 1) synthesis in 1D; 2) simple 2D image regiration (intensity-based Gaussian likelihood + MCMC inference)
+- 03/16/2016, Version 0.0.2  -- 1) synthesis in 1D; 2) simple 2D image registration (intensity-based Gaussian likelihood + MCMC inference)
 - 03/15/2016, Version 0.0.1  -- First release (synthsis in 2D).
 
 ## Coming soon: 
