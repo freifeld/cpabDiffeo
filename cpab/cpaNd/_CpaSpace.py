@@ -342,8 +342,9 @@ class CpaSpace(object):
         """
         It is ok to use the same array for velTess_in and velTess_out. 
         """
+        
         self.velTess2Avees(velTess=velTess_in) # if velTess is not in the space
-                                            # then self.Avees won't in it too.
+                                            # then self.Avees won't be in it too.
         theta = self.Avees2theta() # this does the projection.
         self.theta2Avees(theta) # so now self.Avees will be in the space
         self.Avees2velTess(velTess=velTess_out)
@@ -446,6 +447,24 @@ class CpaSpace(object):
         
     def __repr__(self):
         return self.subspace_string    
+
+    def get_idx_of_a_vert(self,val):
+        """
+        """
+        if not isinstance(val,np.ndarray):
+            raise TypeError(type(val))
+        if val.shape != (self.dim_domain,):
+            raise ValueError
+        try:    
+            return np.all(self.local_stuff.vert_tess[:,:-1]==val,axis=1).nonzero()[0][0]
+        except IndexError:
+            msg="""
+The vertices are:
+{}
+but
+{} is not one of them.
+            """.format(self.local_stuff.vert_tess[:,:-1],val)
+            raise Exception(msg)
 
 
     def velTess2Avees(self,velTess,Avees=None):
