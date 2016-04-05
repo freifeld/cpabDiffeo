@@ -48,7 +48,7 @@ class CpaSpace(CpaSpaceNd):
                              
         nCx,nCy=map(int,nCs)  
 
-        debug_cont_constraints_are_separable=True
+        debug_cont_constraints_are_separable=False
         if cont_constraints_are_separable:
             print 'Check if can actually use separable continuity:'
             if any(zero_v_across_bdry):
