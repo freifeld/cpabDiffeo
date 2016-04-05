@@ -5,3 +5,6 @@ from cpab.cpaNd.utils import create_constraint_mat_zerovals
 
 
 from cpab.cpaNd.utils import create_constraint_mat_preserve_vol
+
+from _create_cont_constraint_mat_separable import create_cont_constraint_mat_separable
+

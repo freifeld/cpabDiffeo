@@ -29,7 +29,8 @@ class TransformWrapper(TransformWrapperNd):
                  zero_v_across_bdry=[False]*2, # For now, don't change that.
                  tess = None,
                  valid_outside=True,
-                 only_local=False):
+                 only_local=False,
+                 cont_constraints_are_separable=False):
         
                     
         """
@@ -57,7 +58,8 @@ class TransformWrapper(TransformWrapperNd):
                  zero_v_across_bdry=zero_v_across_bdry,
                  tess=tess,
                  valid_outside=valid_outside,
-                 only_local=only_local)
+                 only_local=only_local,
+                 cont_constraints_are_separable=cont_constraints_are_separable)
          
         self.nRows = self.args.nRows = nRows
         self.nCols = self.args.nCols = nCols
@@ -103,7 +105,8 @@ class TransformWrapper(TransformWrapperNd):
                                   tess=tess,
                                   Ngrids=Ngrids,
                                   valid_outside=valid_outside,
-                                  only_local=only_local)
+                                  only_local=only_local,
+                                  cont_constraints_are_separable=cont_constraints_are_separable)
        
         self.ms=ms
          

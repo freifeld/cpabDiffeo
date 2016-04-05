@@ -26,7 +26,9 @@ class Multiscale(object):
                  my_dtype=my_dtype,
                  Ngrids=None,
                  CpaCalcs=None,
-                 only_local=False):
+                 only_local=False,
+                 cont_constraints_are_separable=None):
+        
         if zero_vals is None:
             raise ValueError("The child's __init__ must pass this argument")                       
         if Ngrids is None:
@@ -93,6 +95,12 @@ class Multiscale(object):
         
         
         self.only_local = only_local
+        
+        if self.dim_domain>1:
+            if cont_constraints_are_separable is None:
+                raise ObsoleteError("""
+                Expected True/False value for cont_constraints_are_separable;
+                got None instead""")
 
     def try_to_determine_level(self):
         if self.nLevels==1:

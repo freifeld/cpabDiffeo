@@ -39,7 +39,8 @@ class Multiscale(MultiscaleNd):
 #                 CpaCalcs=None,                
                  tess='II',
                  valid_outside=None,
-                 only_local=False
+                 only_local=False,
+                 cont_constraints_are_separable=None
                  ,**kwargs):
         if 'CpaCalcs' in kwargs.keys():
             raise ObsoleteError                     
@@ -63,7 +64,8 @@ class Multiscale(MultiscaleNd):
                  my_dtype=my_dtype,
                  Ngrids=Ngrids,
                  CpaCalcs=CpaCalcs,
-                 only_local=only_local
+                 only_local=only_local,
+                 cont_constraints_are_separable=cont_constraints_are_separable
                  )
             
         base = np.asarray(base)                                                             
@@ -84,7 +86,9 @@ class Multiscale(MultiscaleNd):
                                 cpa_calcs=self.calcs, 
                                 tess=tess,
                                 valid_outside=valid_outside,
-                                only_local=only_local) 
+                                only_local=only_local,
+                                cont_constraints_are_separable=cont_constraints_are_separable)
+
             
             if cpa_space.d == 0:
                 raise ValueError('dim is zero: ',nCellsInEachDim,XMINS,XMAXS,

@@ -22,7 +22,8 @@ class TransformWrapper(object):
                  zero_v_across_bdry,
                  tess,
                  valid_outside,
-                 only_local):
+                 only_local,
+                 cont_constraints_are_separable=None):
         
         if not isinstance(vol_preserve,bool):
             raise TypeError(vol_preserve)
@@ -43,6 +44,12 @@ class TransformWrapper(object):
         self.args.tess  =  tess
         self.args.valid_outside = valid_outside
         self.args.only_local = only_local
+        if self.dim_domain>1:
+            if cont_constraints_are_separable is None:
+                raise ObsoleteError("""
+                Expected True/False value for cont_constraints_are_separable;
+                got None instead""")
+            self.cont_constraints_are_separable=cont_constraints_are_separable
         
         self.timer = Bunch()
         
@@ -56,6 +63,7 @@ class TransformWrapper(object):
         
         self.timer.remap = GpuTimer()
         
+
         
     def __repr__(self):
         s = 'tw:\n\t'

@@ -32,7 +32,11 @@ class CpaSpace(CpaSpaceNd):
                  tess='II',
                  valid_outside=None,
                  only_local=False,
-                 cont_constraints_are_separable=True):
+                 cont_constraints_are_separable=None):
+        if cont_constraints_are_separable is None:
+            raise ObsoleteError("""
+            Expected True/False value for cont_constraints_are_separable;
+            got None instead""")
         if tess == 'II' and valid_outside is not None:
             print "tess='II' --> ignoring the value of valid_outside"
         if tess == 'I':
@@ -142,36 +146,30 @@ class CpaSpace(CpaSpaceNd):
             
             
             if not cont_constraints_are_separable:
-                try:
-                    B=null(L)     
-                except:
-                    print '----------------------'
-                    print self.filename_subspace
-                    print '---------------------'
-                    raise
-            else:
-                if cont_constraints_are_separable: # to solve a nuch smaller SVD and to get a sparser basis                  
-                    if vol_preserve or any(zero_v_across_bdry):
-                        raise NotImplementedError
-                    B1=null(Lx)   
-                    # B1.shape is (nC*nHomoCoo)x dim_null_space
-                    
-                    if debug_cont_constraints_are_separable:
-                        B=null(L)
-                        if B1.shape[0]!=B.shape[0]/3:
-                            raise ValueError(B1.shape,B.shape)
-                        if float(B1.shape[1])*self.dim_range != B.shape[1]:
-                            raise ValueError(B1.shape,B.shape)
-                    _B = np.zeros((B1.shape[0]*3,B1.shape[1]*self.dim_range),B1.dtype)
-                    for j in range(B1.shape[1]):
-                        Avees = B1[:,j] # length=self.nC*self.nHomoCoo
-                        arr=Avees.reshape(self.nC,self.nHomoCoo)
-                        for k in range(self.dim_range):
-                            arr2=np.hstack([arr if m==k else np.zeros_like(arr) for m in range(self.dim_range)])
-                            arr3=arr2.reshape(self.nC,self.lengthAvee)
-                            arr4=arr3.flatten()                
-                            _B[:,j+k*B1.shape[1]]=arr4
-                    B=_B
+                B=null(L)     
+
+            else: # to solve a nuch smaller SVD and to get a sparser basis                  
+                if vol_preserve or any(zero_v_across_bdry):
+                    raise NotImplementedError
+                B1=null(Lx)   
+                # B1.shape is (nC*nHomoCoo)x dim_null_space
+                
+                if debug_cont_constraints_are_separable:
+                    B=null(L)
+                    if B1.shape[0]!=B.shape[0]/3:
+                        raise ValueError(B1.shape,B.shape)
+                    if float(B1.shape[1])*self.dim_range != B.shape[1]:
+                        raise ValueError(B1.shape,B.shape)
+                _B = np.zeros((B1.shape[0]*3,B1.shape[1]*self.dim_range),B1.dtype)
+                for j in range(B1.shape[1]):
+                    Avees = B1[:,j] # length=self.nC*self.nHomoCoo
+                    arr=Avees.reshape(self.nC,self.nHomoCoo)
+                    for k in range(self.dim_range):
+                        arr2=np.hstack([arr if m==k else np.zeros_like(arr) for m in range(self.dim_range)])
+                        arr3=arr2.reshape(self.nC,self.lengthAvee)
+                        arr4=arr3.flatten()                
+                        _B[:,j+k*B1.shape[1]]=arr4
+                B=_B
             
 
 #           
@@ -242,9 +240,7 @@ class CpaSpace(CpaSpaceNd):
                         ipshell('FAILED ALL CLOSE TEST')
                         raise ValueError                    
 
-#        ipshell('hi')
-#        1/0
-# 
+
         
     def __repr__(self):
         s = "cpa space ({}):".format(self.tess)
@@ -317,7 +313,8 @@ if __name__=="__main__":
 #                             ],
                              tess=tess,
                              valid_outside=valid_outside,
-                             cpa_calcs=cpa_calcs)
+                             cpa_calcs=cpa_calcs,
+                             cont_constraints_are_separable=True)
     
     print cpa_space     
        

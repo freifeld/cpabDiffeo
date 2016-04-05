@@ -32,15 +32,46 @@ class CpaSpace(CpaSpaceNd):
                  zero_vals=[],cpa_calcs=None,
                  tess=['II','I'][0],
                  valid_outside=None,
-                 only_local=False):
+                 only_local=False,
+                 cont_constraints_are_separable=None):
+        if cont_constraints_are_separable is None:
+            raise ObsoleteError("""
+            Expected True/False value for cont_constraints_are_separable;
+            got None instead""")  
+                   
         if tess == 'II' and valid_outside is not None:
             print "tess='II' --> ignoring the value of valid_outside"
         if tess == 'I':
             if valid_outside is None:
                 raise ValueError("tess='I' so you must pass valid_outside=True/False" )
             self.valid_outside=valid_outside
-            
-         
+                             
+        nCx,nCy=map(int,nCs)  
+
+        debug_cont_constraints_are_separable=True
+        if cont_constraints_are_separable:
+            print 'Check if can actually use separable continuity:'
+            if any(zero_v_across_bdry):
+                cont_constraints_are_separable=False
+                print 'any(zero_v_across_bdry) is True'
+            if vol_preserve:
+                cont_constraints_are_separable=False  
+                print 'vol_preserve is True'
+            if nCx!=nCy:
+                cont_constraints_are_separable=False
+                print 'nCx!=nCy'
+            if XMINS[0]!=XMINS[1]:
+                cont_constraints_are_separable=False
+                print 'XMINS[0]!=XMINS[1]'
+            if XMAXS[0]!=XMAXS[1]:
+                cont_constraints_are_separable=False
+                print 'XMAXS[0]!=XMAXS[1]'
+            if not cont_constraints_are_separable:
+                debug_cont_constraints_are_separable=False
+                print 'so I could not use separable continuity.'
+            else:
+                print '\nWill use separable continuity.\n'
+
         super(CpaSpace,self).__init__(XMINS,XMAXS,nCs,
                  zero_v_across_bdry,
                  vol_preserve=vol_preserve,
@@ -49,124 +80,137 @@ class CpaSpace(CpaSpaceNd):
                  zero_vals=zero_vals,
                  cpa_calcs=cpa_calcs,tess=tess,
                  valid_outside=valid_outside,
-                 only_local=only_local)                                     
-                  
-        nCx,nCy=map(int,nCs)        
-#        self.nCx=nCx
-#        self.nCy=nCy  
-#        cells_multiidx,cells_verts=create_cells(nCx,nCy,self.nC,self.XMINS,self.XMAXS,tess=tess)   
-                                                                                                                                                                                                               
+                 only_local=only_local,
+                 cont_constraints_are_separable=cont_constraints_are_separable) 
+
         tessellation = Tessellation(nCx,nCy,self.nC,self.XMINS,self.XMAXS,tess=tess)
         self.tessellation=tessellation
 
         
-        
-        
-        if 1:
-            try:
+       
+        try:
 #                raise FileDoesNotExistError("fake file")
-                subspace=Pkl.load(self.filename_subspace,verbose=1)
-                B=subspace['B']
-                nConstraints=subspace['nConstraints']
-                nEdges=subspace['nEdges']
-                constraintMat=subspace['constraintMat']
-#                cells_verts =np.asarray(cells_verts) 
-                
-            except FileDoesNotExistError: 
-                
-                nC = self.nC
-                verts1,verts2,H,nEdges,nConstraints = self.tessellation.create_verts_and_H(
-                dim_range=self.dim_range,valid_outside=valid_outside)
-                
-#                if tess == 'II':
-#                    verts1,verts2,H,nEdges,nConstraints = create_verts_and_H(self.nC,
-#                                                                  cells_multiidx, cells_verts,
-#                                                                  dim_domain=self.dim_domain,
-#                                                                  dim_range=self.dim_range)
-#                elif tess == 'I':
-#                    verts1,verts2,H,nEdges,nConstraints = self.tessellation.create_verts_and_H_type_I()
-##                    verts1,verts2,H,nEdges,nConstraints = create_verts_and_H_tri(nCx,nCy,self.nC,
-##                                                                  cells_multiidx, cells_verts,
-##                                                                  dim_domain=self.dim_domain,
-##                                                                  dim_range=self.dim_range,
-##                                                                  valid_outside=valid_outside)
-##                                                                
-#                else:
-#                    raise ValueError(tess)               
-                
-                
-                
-    
-                                                         
-#                cells_verts =np.asarray(cells_verts)                                                        
+            subspace=Pkl.load(self.filename_subspace,verbose=1)
+            B=subspace['B']
+            nConstraints=subspace['nConstraints']
+            nEdges=subspace['nEdges']
+            constraintMat=subspace['constraintMat']
+            try:
+                cont_constraints_are_separable=subspace['cont_constraints_are_separable']
+            except KeyError:
+                cont_constraints_are_separable=False
+            
+        except FileDoesNotExistError: 
+            
+            nC = self.nC
+            verts1,verts2,H,nEdges,nConstraints = self.tessellation.create_verts_and_H(
+            dim_range=self.dim_range,valid_outside=valid_outside)
+            
+            if cont_constraints_are_separable == False or debug_cont_constraints_are_separable:                                                          
                 L = create_cont_constraint_mat(H,verts1,verts2,nEdges,nConstraints,nC,
                                                dim_domain=self.dim_domain,
                                                dim_range=self.dim_range)                  
-                
+            if cont_constraints_are_separable:
+                Lx = create_cont_constraint_mat_separable(H,verts1,verts2,nEdges,nConstraints,
+                                                   nC,dim_domain=self.dim_domain,
+                                                   dim_range=self.dim_range,tess=tess)
+             
+            if len(zero_vals): 
                  
-                if len(zero_vals): 
-                     
-                    Lzerovals = create_constraint_mat_zerovals(nC,dim_domain=self.dim_domain,
-                                                               dim_range=self.dim_range,
-                                                               zero_vals=zero_vals)
-                    L = np.vstack([L,Lzerovals])
-                    nConstraints += Lzerovals.shape[0]    
-                              
-                if any(zero_v_across_bdry):
-#                    raise ValueError("I am not sure this is still supported")
+                Lzerovals = create_constraint_mat_zerovals(nC,dim_domain=self.dim_domain,
+                                                           dim_range=self.dim_range,
+                                                           zero_vals=zero_vals)
+                L = np.vstack([L,Lzerovals])
+                nConstraints += Lzerovals.shape[0]    
+                          
+            if any(zero_v_across_bdry):
+#                    Lbdry = self.tessellation.create_constraint_mat_bdry(
+#                                      zero_v_across_bdry=self.zero_v_across_bdry)
+#
+#                    L = np.vstack([L,Lbdry])
+                
+                if cont_constraints_are_separable == False or debug_cont_constraints_are_separable:  
                     Lbdry = self.tessellation.create_constraint_mat_bdry(
                                       zero_v_across_bdry=self.zero_v_across_bdry)
-#                    Lbdry = create_constraint_mat_bdry(XMINS,XMAXS, cells_verts, nC,
-#                                          dim_domain=self.dim_domain,
-#                                          zero_v_across_bdry=self.zero_v_across_bdry)
+    
                     L = np.vstack([L,Lbdry])
-                    nConstraints += Lbdry.shape[0]
-                if self.warp_around[0] or self.warp_around[1]:
-                    raise NotImplementedError
-                    Lwa = create_constraint_mat_warp_around(cells_verts,
-                                                              nC,dim_domain=self.dim_domain)
-                    L = np.vstack([L,Lwa])
-                    nConstraints += Lwa.shape[0]
-                    
-                if vol_preserve:
-                    Lvol = create_constraint_mat_preserve_vol(nC,dim_domain=self.dim_domain)
-                    L = np.vstack([L,Lvol])
-                    nConstraints += Lvol.shape[0]
-                    
-                if conformal:
-                    Lconf = create_constraint_mat_conformal(nC,dim_domain=self.dim_domain,dim_range=self.dim_range)
-                    L = np.vstack([L,Lconf])
-                    nConstraints += Lconf.shape[0]                
-                    
-                if self.only_local==False:  
-                     
-                    try:
-                        B=null(L)     
-                    except:
-                        print '----------------------'
-                        print self.filename_subspace
-                        print '---------------------'
-                        raise
-                else:
-                    if tess != 'I':
+                if cont_constraints_are_separable:
+                    Lb = self.tessellation.create_constraint_mat_bdry_separable(
+                                      zero_v_across_bdry=self.zero_v_across_bdry)
+                    raise NotImplementedError(zero_v_across_bdry, cont_constraints_are_separable)                    
+                
+                nConstraints += Lbdry.shape[0]
+            if self.warp_around[0] or self.warp_around[1]:
+                raise NotImplementedError
+                Lwa = create_constraint_mat_warp_around(cells_verts,
+                                                          nC,dim_domain=self.dim_domain)
+                L = np.vstack([L,Lwa])
+                nConstraints += Lwa.shape[0]
+                
+            if vol_preserve:
+                Lvol = create_constraint_mat_preserve_vol(nC,dim_domain=self.dim_domain)
+                L = np.vstack([L,Lvol])
+                nConstraints += Lvol.shape[0]
+                
+            if conformal:
+                Lconf = create_constraint_mat_conformal(nC,dim_domain=self.dim_domain,dim_range=self.dim_range)
+                L = np.vstack([L,Lconf])
+                nConstraints += Lconf.shape[0]                
+                
+            if self.only_local==False:  
+                
+                
+                if not cont_constraints_are_separable:
+                    B=null(L)   
+                else: # to solve a nuch smaller SVD and to get a sparser basis                  
+                    if vol_preserve or any(zero_v_across_bdry):
                         raise NotImplementedError
-                    B = None
+                    B1=null(Lx)   
+                    # B1.shape is (nC*nHomoCoo)x dim_null_space
                     
-                constraintMat=sparse.csr_matrix(L)  
-                
-                    
-                
-                Pkl.dump(self.filename_subspace,{'B':B,
-                                                 'nConstraints':nConstraints,
-                                                 'nEdges':nEdges,
-                                                 'constraintMat':constraintMat},
-                                                 override=True)
+                    if debug_cont_constraints_are_separable:
+                        B=null(L)
+                        if B1.shape[0]!=B.shape[0]/2:
+                            raise ValueError(B1.shape,B.shape)
+                        if float(B1.shape[1])*self.dim_range != B.shape[1]:
+                            raise ValueError(B1.shape,B.shape)
+                    _B = np.zeros((B1.shape[0]*2,B1.shape[1]*self.dim_range),B1.dtype)
+                    for j in range(B1.shape[1]):
+                        Avees = B1[:,j] # length=self.nC*self.nHomoCoo
+                        arr=Avees.reshape(self.nC,self.nHomoCoo)
+                        for k in range(self.dim_range):
+                            arr2=np.hstack([arr if m==k else np.zeros_like(arr) for m in range(self.dim_range)])
+                            arr3=arr2.reshape(self.nC,self.lengthAvee)
+                            arr4=arr3.flatten()                
+                            _B[:,j+k*B1.shape[1]]=arr4
+                    if debug_cont_constraints_are_separable:
+                        if B.shape != _B.shape:
+                            raise ValueError(B.shape,_B.shape)
+                    B=_B
 
-        # I moved it into   __finish_init__                                             
-#        local_stuff = get_stuff_for_the_local_version(self,cells_verts)
-#        self.local_stuff = local_stuff
-         
+                    
+                    
+            else:
+                if tess != 'I':
+                    raise NotImplementedError
+                B = None
+                
+            if cont_constraints_are_separable:
+                    L=Lx                    
+            constraintMat=sparse.csr_matrix(L)  
             
+                
+            
+            Pkl.dump(self.filename_subspace,{'B':B,'cont_constraints_are_separable':cont_constraints_are_separable,
+                                             'nConstraints':nConstraints,
+                                             'nEdges':nEdges,
+                                             'constraintMat':constraintMat},
+                                             override=True)
+
+
+         
+           # Since B encodes the null space of, it follows that
+           #  np.allclose(L.dot(B),0)==True           
          
         super(CpaSpace,self).__finish_init__(tessellation=tessellation,
                                              constraintMat=constraintMat,
@@ -174,6 +218,7 @@ class CpaSpace(CpaSpaceNd):
                                              nInterfaces=nEdges,
                                              B=B,zero_vals=zero_vals) 
                 
+        self.cont_constraints_are_separable=cont_constraints_are_separable
                    
   
         
@@ -184,20 +229,40 @@ class CpaSpace(CpaSpaceNd):
         
         self.x_dense_img = self._calcs.x_dense_img
         self.x_dense_grid_img = self._calcs.x_dense_grid_img        
-        
-        # MOVED THIS TO TESSELLATION.PY                   
-#        self._xmins_LargeNumber = np.asarray(self._xmins).copy()  
-#        self._xmaxs_LargeNumber = np.asarray(self._xmaxs).copy()  
-#        self._xmins_LargeNumber[self._xmins_LargeNumber<=self.XMINS]=-self._LargeNumber
-#        self._xmaxs_LargeNumber[self._xmaxs_LargeNumber>=self.XMAXS]=+self._LargeNumber 
-#        
+   
        
         self.grid_shape = self.x_dense_grid_img[0].shape
         
 
-        # some sanity checks
-        # i=0;np.allclose(self.BasMats[i][0].dot(verts1[0]),self.BasMats[i][1].dot(verts1[0]))
-            
+        verts=self.tessellation.cells_verts_homo_coo
+        
+        for i in range(0,self.nC):
+            for j in range(0,i):
+                verts1=verts[i]
+                verts2=verts[j]
+                shared=[]
+                for v1 in verts1:
+                    for v2 in verts2:
+                        if (v1==v2).all():
+                            shared.append(v1)
+        
+                shared = np.asarray(shared).T
+                if len(shared)==0:
+                    continue
+        #        theta =self.get_zeros_theta()
+                for m in range(self.d):
+            #        theta[j]=1
+                    Avees=self.get_zeros_PA()
+                    Avees[:]=self.B[:,m]
+            #        self.theta2Avees(Avees=Avees,theta=theta)
+                    As=self.Avees2As(Avees=Avees)
+                    Ai=As[i]
+                    Aj=As[j]
+                    #Ai.dot(shared) is 3 x 3 =  dim x #verts_per_side
+                    # At the moment, the problem is w/ the last entry of the 4 vert (100,100,0,1)
+                    if not np.allclose((Ai-Aj).dot(shared),0):
+                        ipshell('FAILED ALL CLOSE TEST')
+                        raise ValueError            
         
     def get_x_dense(self):
         return self.x_dense
