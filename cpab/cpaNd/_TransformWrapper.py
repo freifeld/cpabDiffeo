@@ -26,9 +26,9 @@ class TransformWrapper(object):
                  cont_constraints_are_separable=None):
         
         if not isinstance(vol_preserve,bool):
-            raise TypeError(vol_preserve)
+            raise TypeError(type(vol_preserve), 'expected bool')
         if not isinstance(valid_outside,bool) and self.dim_domain>1:
-            raise TypeError(valid_outside)
+            raise TypeError(type(valid_outside), 'expected bool')
         
 
         

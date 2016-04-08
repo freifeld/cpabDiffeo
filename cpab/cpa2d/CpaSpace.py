@@ -236,33 +236,34 @@ class CpaSpace(CpaSpaceNd):
 
         verts=self.tessellation.cells_verts_homo_coo
         
-        for i in range(0,self.nC):
-            for j in range(0,i):
-                verts1=verts[i]
-                verts2=verts[j]
-                shared=[]
-                for v1 in verts1:
-                    for v2 in verts2:
-                        if (v1==v2).all():
-                            shared.append(v1)
-        
-                shared = np.asarray(shared).T
-                if len(shared)==0:
-                    continue
-        #        theta =self.get_zeros_theta()
-                for m in range(self.d):
-            #        theta[j]=1
-                    Avees=self.get_zeros_PA()
-                    Avees[:]=self.B[:,m]
-            #        self.theta2Avees(Avees=Avees,theta=theta)
-                    As=self.Avees2As(Avees=Avees)
-                    Ai=As[i]
-                    Aj=As[j]
-                    #Ai.dot(shared) is 3 x 3 =  dim x #verts_per_side
-                    # At the moment, the problem is w/ the last entry of the 4 vert (100,100,0,1)
-                    if not np.allclose((Ai-Aj).dot(shared),0):
-                        ipshell('FAILED ALL CLOSE TEST')
-                        raise ValueError            
+        if 0: # testing
+            for i in range(0,self.nC):
+                for j in range(0,i):
+                    verts1=verts[i]
+                    verts2=verts[j]
+                    shared=[]
+                    for v1 in verts1:
+                        for v2 in verts2:
+                            if (v1==v2).all():
+                                shared.append(v1)
+            
+                    shared = np.asarray(shared).T
+                    if len(shared)==0:
+                        continue
+            #        theta =self.get_zeros_theta()
+                    for m in range(self.d):
+                #        theta[j]=1
+                        Avees=self.get_zeros_PA()
+                        Avees[:]=self.B[:,m]
+                #        self.theta2Avees(Avees=Avees,theta=theta)
+                        As=self.Avees2As(Avees=Avees)
+                        Ai=As[i]
+                        Aj=As[j]
+                        #Ai.dot(shared) is 3 x 3 =  dim x #verts_per_side
+                        # At the moment, the problem is w/ the last entry of the 4 vert (100,100,0,1)
+                        if not np.allclose((Ai-Aj).dot(shared),0):
+                            ipshell('FAILED ALL CLOSE TEST')
+                            raise ValueError            
         
     def get_x_dense(self):
         return self.x_dense
