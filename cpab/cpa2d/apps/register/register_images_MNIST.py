@@ -93,7 +93,8 @@ def main(data,infernece_params,dispOn ):
     return  reg,inference_record,theta_est
     
 if __name__ == "__main__":
-    from pyvision.essentials import *
+#    from pyvision.essentials import *
+    import cv2
 
     class InferenceParamsDefault(object):
         MCMCniters_per_level = 10000
