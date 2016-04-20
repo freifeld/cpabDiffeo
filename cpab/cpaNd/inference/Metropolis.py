@@ -42,8 +42,10 @@ class Metropolis(MCMC_InferenceAlgorithm):
         self.nSteps+=1
         theta_current = self.theta_current
         theta_proposed = self.theta_proposed
-        self.proposal(theta_current,theta_proposed)
         
+        self.proposal(theta_current,theta_proposed)
+#        ipshell('hi')
+#        1/0
 #        self.theta_proposed *= 1000 # DEBUG
         
 #        if self.nSteps % 10 == 0:
@@ -53,11 +55,14 @@ class Metropolis(MCMC_InferenceAlgorithm):
         ll_proposed = self.ll_func(theta_proposed) 
         
          
-        if self.use_ave_ll:             
+        if self.use_ave_ll:              
             ll_proposed /=  self.ll_func._ll_func.nPts
         log_ratio =  ll_proposed - self.ll_current
+        
         self.log_ratio=log_ratio
+#        print 'll_proposed , self.ll_current:',ll_proposed , self.ll_current
 #        print 'log_ratio',log_ratio
+        
         lp_func = self.lp_func
         if lp_func is not None:
             lp_current = self.lp_current
