@@ -170,7 +170,8 @@ class Register(object):
 
     def fit(self,use_prior=False,proposal_scale=0.001,use_local=True,dispOn=True,
             interp_type_for_ll=None,
-            interp_type_during_visualization=None):
+            interp_type_during_visualization=None,
+            scale_local_proposal=None):
         nLevels=self.nLevels
         tw = self.tw 
         sigma_signal = self.sigma_signal
@@ -234,7 +235,8 @@ class Register(object):
                                            'interp_type_for_ll':interp_type_for_ll} ),
                                  proposal=Proposal(ms=tw.ms,msp=tw.msp,level=level,
                                                    scale=proposal_scale,
-                                                   use_local=use_local),
+                                                   use_local=use_local,
+                                                   scale_local_proposal=scale_local_proposal),
 #                                 proposal=ProposalSphericalGaussian(ms=tw.ms,
 #                                                                    level=level,
 #                                                   scale=0.1 / (1.2**level) 

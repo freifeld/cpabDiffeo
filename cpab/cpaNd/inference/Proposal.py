@@ -13,12 +13,17 @@ from numpy.random import multivariate_normal as draw_from_mvnormal
 AND = np.logical_and
 OR = np.logical_or
 class Proposal(object):
-    def __init__(self,ms,msp,level,scale=0.01,use_local=False):
+    def __init__(self,ms,msp,level,scale=0.01,use_local=False,
+                 scale_local_proposal=None):
         self.level=level
         self.ms = ms
         self.msp = msp
         self.scale = scale
         self.use_local=use_local
+        if scale_local_proposal is None:
+            scale_local_proposal=10
+        scale_local_proposal=float(scale_local_proposal)
+        self.scale_local_proposal=scale_local_proposal
          
     
     def __call__(self,theta_current,theta_proposed,prob_larger=0.1*0,
@@ -43,7 +48,7 @@ class Proposal(object):
                 scale = self.scale * 10                
             else:
                 pass
-              
+         
         if nullify_cells is None:    
             if 0:
                 msp.sample_normal_in_one_level(level,cpa_space.Avees,theta,
@@ -70,22 +75,28 @@ class Proposal(object):
                     cpa_space.Avees2velTess(Avees=Avees,velTess=velTess)
                     
 #                    vals +=1000*np.random.standard_normal(vals.shape)
-#                    ipshell('hi')
                     
                     # TODO: switch to a more intelligent proposal
                     
                     V = cpa_space.local_stuff.vert_tess[:,:cpa_space.dim_domain]
+                    scale_local_proposal=self.scale_local_proposal
+                    
                     for i in range(1):
                         idx = np.random.random_integers(0,len(velTess)-1)
-#                        ipshell('hi')
 #                        1/0
 #                        velTess[idx]+=1000*np.random.standard_normal(size=dim_range)
                         
-                        # LANDMARKS
+                        
+                        value = np.random.standard_normal(size=dim_range)
                         if cpa_space.dim_domain>1:
-                            velTess[idx]+=10*1.0*cpa_space.XMAXS.min()*np.random.standard_normal(size=dim_range)
+                            s=scale_local_proposal*cpa_space.XMAXS.min()
+                            
+                           
+                            
+                            velTess[idx]+=s*value
                         else:
-                            velTess[idx]+=.01*np.random.standard_normal(size=dim_range)
+                            
+                            velTess[idx]+=.01*value
                         
                         
 #                        velTess[idx]+=1*1.0*cpa_space.XMAXS.min()*np.random.standard_normal(size=dim_range)
@@ -106,12 +117,14 @@ class Proposal(object):
                             for coo in range(cpa_space.dim_domain):                            
                                 if V[idx,coo] in (0,cpa_space.XMAXS[coo]):
                                     velTess[idx]=0     
-    #                                ipshell('hoi')
+    #                                ipshell('hi')
     #                                1/0
                             
                         
                     
                     cpa_space.project_velTess(velTess,velTess)
+#                    ipshell('hi')
+#                    1/0
                     
                     cpa_space.velTess2Avees(velTess=velTess,Avees=Avees)
                     cpa_space.Avees2theta(theta=theta)
