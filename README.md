@@ -1,7 +1,7 @@
 # cpabDiffeo
-Finite-dimensional spaces of simple, fast, and highly-expressive diffeomorphisms, self-coined CPAB transformations, derived from parametric, continuously-defined, velocity fields.
+CPAB transformations are simple, fast, and highly-expressive finite-dimensional diffeomorphisms. They are derived from parametric, continuously-defined, velocity fields.
 
-This Python+CUDA implementation is based on our paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants of that work that were not included in the ICCV paper due to page limits. 
+This implementation is based on our paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants that were not included in the ICCV paper. 
 
 For example, while the ICCV paper discusses only $R^n$ for n=1,2,3, the implementation here also supports higher values of $n$ (as to be expected, both the dimensionality of the representation and integration computing time increase with $n$ and thus values of $n$ that are too high will be impractical in terms of memory, inference, running time, etc.).
 It also contains additional types of tessellations and bases. There are pros and cons for each choice.
@@ -9,7 +9,8 @@ It also contains additional types of tessellations and bases. There are pros and
 **In March 2016 we released a [preprint](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016.pdf) (that
 extends our ICCV paper) which covers these options.** The supplemental material for this preprint is available [here](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016_supmat.pdf).
 
-Finally, you may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one I will maintain here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
+The current implementation is written in Python+CUDA. We will soon add a matlab wrapper. 
+You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one that will be maintained here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
 ## Author of this software
 
@@ -55,7 +56,7 @@ git clone git@github.com:freifeld/of.git
 git clone git@github.com:freifeld/pyimg.git
 ```
 ## OS
-The code was tested on Linux and Windows. I believe it should work on Mac, but didn't get a chance to test it.
+The code was tested on Linux and Windows. It should work on Mac, but I didn't get a chance to test it.
 
 ## Installation
 (todo: add instructions for Windows users)
@@ -74,9 +75,9 @@ export PYTHONPATH=$PYTHONPATH:$~
 # To enable  improting of the "cpab" package which is inside ~/cpabDiffeo
 export PYTHONPATH=$PYTHONPATH:$~/cpabDiffeo/  
 ```
-That's it. You should be good to go.
+
 ## How to run the code
-For now, these are just quick demos that show synthesis in 1d, 2d, or 3d and have several possible configurations that the user can modify. To run the demos, first neviagate into the cpab directory. Then:
+We provide quick demos that show synthesis in 1d, 2d, or 3d and have several possible configurations that the user can modify. To run the demos, first neviagate into the cpab directory. Then:
 ```
 python cpa1d/TransformWrapper_example.py  # 1d 
 python cpa2d/TransformWrapper_example.py  # 2d 
