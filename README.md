@@ -9,7 +9,7 @@ It also contains additional types of tessellations and bases. There are pros and
 **In March 2016 we released a [preprint](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016.pdf) (that
 extends our ICCV paper) which covers these options.** The supplemental material for this preprint is available [here](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016_supmat.pdf).
 
-The current implementation is written in Python+CUDA. We will soon add a matlab wrapper. 
+The current implementation is written in **Python**+**CUDA**. We will soon add a **matlab** wrapper. 
 You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one that will be maintained here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
 ## Author of this software
