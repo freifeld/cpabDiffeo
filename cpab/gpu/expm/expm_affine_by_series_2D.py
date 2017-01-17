@@ -248,7 +248,7 @@ def gpu_expm(As,Ts_vectorized,p=12):
     if Ts_vectorized.ndim != 2 or Ts_vectorized.shape[1] != 6:
         raise ValueError(Ts_vectorized.shape)  
         
-    threadsPerBlock=1024
+    threadsPerBlock=512
     nBlocks = int(np.ceil(float(N) / float(threadsPerBlock))) 
     
     _gpu_expm(As.gpu,
