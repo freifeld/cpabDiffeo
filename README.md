@@ -1,16 +1,12 @@
 # cpabDiffeo
 CPAB transformations are simple, fast, and highly-expressive finite-dimensional diffeomorphisms. They are derived from parametric, continuously-defined, velocity fields.
 
-This implementation is based on our paper, [\[Freifeld et al., ICCV '15\] ](http://people.csail.mit.edu/freifeld/publications.htm), but also contains some extensions and variants that were not included in the ICCV paper. 
+This implementation is based on our Journal paper, 
+[\Freifeld et al., PAMI '17\]](http://ieeexplore.ieee.org/abstract/document/7814343/)
+and its earlier conference version [\[Freifeld et al., ICCV '15\]](http://people.csail.mit.edu/freifeld/publications.htm).
 
-For example, while the ICCV paper discusses only $R^n$ for n=1,2,3, the implementation here also supports higher values of $n$ (as to be expected, both the dimensionality of the representation and integration computing time increase with $n$ and thus values of $n$ that are too high will be impractical in terms of memory, inference, running time, etc.).
-It also contains additional types of tessellations and bases. There are pros and cons for each choice.
-
-**In March 2016 we released a [preprint](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016.pdf) (that
-extends our ICCV paper) which covers these options.** The supplemental material for this preprint is available [here](http://people.csail.mit.edu/freifeld/papers/freifeld_CPAB_preprint_2016_supmat.pdf).
-
-The current implementation is written in **Python**+**CUDA**. We will soon add a **matlab** wrapper. 
-You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one that will be maintained here (e.g, it is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
+The current implementation is written in **Python**+**CUDA**. We will soon release a **Tensorflow** implementation. We plan to release a Matlab version as well. 
+You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one that is (and will be) maintained here (e.g, his code is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
 
 ## Author of this software
 
@@ -18,9 +14,16 @@ Oren Freifeld (email: freifeld@csail.mit.edu)
 
 ## License
 
-This software is released under the MIT License (included with the software). Note, however, that using this code (and/or the results of running it) to support any form of publication (e.g.,a book, a journal paper, a conference paper, a patent application, etc.) requires you to cite the following paper:
+This software is released under the MIT License (included with the software). Note, however, that using this code (and/or the results of running it) to support any form of publication (e.g.,a book, a journal paper, a conference paper, a patent application, etc.) requires you to cite the following papers:
 
 ```
+@article{freifeld2017transformations,
+  title={Transformations Based on Continuous Piecewise-Affine Velocity Fields},
+  author={Freifeld, Oren and Hauberg, Soren and Batmanghelich, Kayhan and Fisher, John W},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year={2017},
+  publisher={IEEE}
+}
 @inproceedings{freifeld2015transform,
     title = {Highly-Expressive Spaces of Well-Behaved Transformations: Keeping It Simple},
     author = {Oren Freifeld and S{\o}ren Hauberg and Kayhan Batmanghelich and John W. Fisher III},
