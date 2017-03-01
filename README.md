@@ -2,8 +2,9 @@
 CPAB transformations are simple, fast, and highly-expressive finite-dimensional diffeomorphisms. They are derived from parametric, continuously-defined, velocity fields.
 
 This implementation is based on our Journal paper, 
-[[\Freifeld et al., TPAMI '17\]](http://ieeexplore.ieee.org/abstract/document/7814343/)
-and its earlier conference version [\[Freifeld et al., ICCV '15\]](http://people.csail.mit.edu/freifeld/publications.htm).
+[\[Freifeld et al., TPAMI '17\]](http://ieeexplore.ieee.org/abstract/document/7814343/)
+and its earlier conference version 
+[\[Freifeld et al., ICCV '15\]](http://people.csail.mit.edu/freifeld/publications.htm).
 
 The current implementation is written in **Python**+**CUDA**. We will soon release a **Tensorflow** implementation. We plan to release a Matlab version as well. 
 You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one that is (and will be) maintained here (e.g, his code is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
