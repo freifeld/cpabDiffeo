@@ -2,7 +2,7 @@
 CPAB transformations are simple, fast, and highly-expressive finite-dimensional diffeomorphisms. They are derived from parametric, continuously-defined, velocity fields.
 
 This implementation is based on our Journal paper, 
-[\[Freifeld et al., TPAMI '17\]](http://ieeexplore.ieee.org/abstract/document/7814343/)
+[\[Freifeld et al., TPAMI '17\]](https://www.cs.bgu.ac.il/~orenfr/papers/freifeld_etal_PAMI_2017)
 and its earlier conference version 
 [\[Freifeld et al., ICCV '15\]](http://people.csail.mit.edu/freifeld/publications.htm).
 
