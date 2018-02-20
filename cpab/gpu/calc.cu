@@ -16,7 +16,7 @@ Email: freifeld@csail.mit.edu
   #define TESS_TYPE 2
 #endif
 
-__device__ inline void A_times_b(double x[], double A[], double b[])
+__device__ inline void A_times_b_affine(double x[], double A[], double b[])
 {
 // Result is computed inside x. 
 #if DIM == 1
@@ -24,39 +24,34 @@ __device__ inline void A_times_b(double x[], double A[], double b[])
 #elif DIM == 2
   x[0] = A[0]*b[0] + A[1]*b[1] + A[2];
   x[1] = A[3]*b[0] + A[4]*b[1] + A[5];
-  
 #elif DIM == 3
-  //x[0] = A[0]*b[0] + A[1]*b[1] + A[2]*b[3] + A[3];
-  //x[1] = A[4]*b[0] + A[5]*b[1] + A[6]*b[3] + A[7];
-  //x[2] = A[8]*b[0] + A[9]*b[1] + A[10]*b[3] + A[11];
- 
-  // Bug fix (Oren Freifeld, 06/23/2014)
   x[0] = A[0]*b[0] + A[1]*b[1] + A[2]*b[2] + A[3];
   x[1] = A[4]*b[0] + A[5]*b[1] + A[6]*b[2] + A[7];
   x[2] = A[8]*b[0] + A[9]*b[1] + A[10]*b[2] + A[11];
-  
- 
-
   return;
 #else
     return false;
 #endif
-
-
-//#pragma unroll
-//  for(int i=0; i<DIM; ++i)
-//  {
-//    x[i] = A[i*(DIM+1)+DIM];
-//#pragma unroll
-//    for(int j=0; j<DIM; ++j)
-//    {
-//      x[i] += A[j+i*(DIM+1)] * b[j];
-//    }
-//  }
 };
 
  
-
+__device__ inline void A_times_b_linear(double x[], double A[], double b[])
+{
+// Result is computed inside x. 
+#if DIM == 1
+  x[0] = A[0]*b[0];
+#elif DIM == 2
+  x[0] = A[0]*b[0] + A[1]*b[1];
+  x[1] = A[3]*b[0] + A[4]*b[1];
+#elif DIM == 3
+  x[0] = A[0]*b[0] + A[1]*b[1] + A[2]*b[2];
+  x[1] = A[4]*b[0] + A[5]*b[1] + A[6]*b[2];
+  x[2] = A[8]*b[0] + A[9]*b[1] + A[10]*b[2];
+  return;
+#else
+    return false;
+#endif
+};
  
 
 __device__ inline int compute_cell_idx(double* p,
@@ -302,14 +297,14 @@ __device__ void solveODE(double *p,  double* As, const double h,
     cell_idx = compute_cell_idx(p,nC0,nC1,nC2,inc_x,inc_y,inc_z);    
     int mi = cell_idx*DIM*(DIM+1); // index of As         
     // compute at the current location
-    A_times_b(v,As+mi,p);    
+    A_times_b_affine(v,As+mi,p);    
     // compute mid point 
 #pragma unroll
     for(int i=0; i<DIM; ++i){           
         pMid[i] = p[i] + h*v[i]/2.;        
     }
     // compute velocity at mid point
-    A_times_b(v,As+mi,pMid);
+    A_times_b_affine(v,As+mi,pMid);
     
     // update p 
 #pragma unroll
@@ -342,7 +337,7 @@ __device__ void solveODE2(double *p,  double* As,  double* Bs,
    double uMid[DIM]; 
 
    double B_times_T[DIM]; 
-   double A_times_dTdAlpha[DIM]; 
+   double A_times_dTdtheta[DIM]; 
 
    
   
@@ -366,14 +361,14 @@ __device__ void solveODE2(double *p,  double* As,  double* Bs,
     int mi = cell_idx*nEntries; // index of As   
     
     // compute at the current location
-    A_times_b(v,As+mi,p);     
+    A_times_b_affine(v,As+mi,p);     
     // compute mid point 
 #pragma unroll
     for(int i=0; i<DIM; ++i){           
         pMid[i] = p[i] + h*v[i]/2.;        
     }
     // compute velocity at mid point
-    A_times_b(vMid,As+mi,pMid);
+    A_times_b_affine(vMid,As+mi,pMid);
 
 
 
@@ -394,13 +389,13 @@ __device__ void solveODE2(double *p,  double* As,  double* Bs,
 
         // Find current RHS (term1 + term2)
         // Term1
-        A_times_b(B_times_T,Bs+ bi   , p); 
+        A_times_b_affine(B_times_T,Bs+ bi   , p); 
         // Term2
-        A_times_b(A_times_dTdAlpha,As+mi  , q); 
+        A_times_b_linear(A_times_dTdtheta,As+mi  , q); 
         // Sum both terms 
 #pragma unroll
         for(int i=0; i<DIM; ++i){           
-            u[i] = B_times_T[i] +  A_times_dTdAlpha[i] ;   
+            u[i] = B_times_T[i] +  A_times_dTdtheta[i] ;   
         }
         
         // Step 2: Compute mid "point"
@@ -412,13 +407,13 @@ __device__ void solveODE2(double *p,  double* As,  double* Bs,
         // Step 3:  compute uMid
 
         // Term1
-        A_times_b(B_times_T,Bs+ bi  , pMid);        
+        A_times_b_affine(B_times_T,Bs+ bi  , pMid);        
         // Term2
-        A_times_b(A_times_dTdAlpha,As+mi  , qMid); 
+        A_times_b_linear(A_times_dTdtheta,As+mi  , qMid); 
         // Sum both terms 
 #pragma unroll
         for(int i=0; i<DIM; ++i){           
-            uMid[i] = B_times_T[i] +  A_times_dTdAlpha[i] ;   
+            uMid[i] = B_times_T[i] +  A_times_dTdtheta[i] ;   
         } 
         
         // update q
@@ -532,7 +527,7 @@ __global__ void calc_T(const double* pos0,double* pos ,const double* Trels, cons
     for (int t=0; t<nTimeSteps; ++t)
     {
       cell_idx = compute_cell_idx(p,nC0,nC1,nC2,inc_x,inc_y,inc_z);                
-      A_times_b(pNew,Trels_ + cell_idx*DIM*(DIM+1),p);
+      A_times_b_affine(pNew,Trels_ + cell_idx*DIM*(DIM+1),p);
       cell_idx_new = compute_cell_idx(pNew,nC0,nC1,nC2,inc_x,inc_y,inc_z);
       if (cell_idx_new == cell_idx){
         // great, we didn't leave the cell
@@ -592,7 +587,7 @@ __global__ void calc_T_simple(const double* pos0,double* pos , const double* As,
 }
 
  
-__global__ void calc_grad_alpha(const double* pos0,double* pos , 
+__global__ void calc_grad_theta(const double* pos0,double* pos , 
   const double* As, 
   double* Bs,
   double* grad_per_point, // shape: (nPts,dim_range,d=len(BasMats)),
@@ -691,7 +686,7 @@ __global__ void calc_trajectory(double* pos,
     {
       
       cell_idx = compute_cell_idx(p,nC0,nC1,nC2,inc_x,inc_y,inc_z);               
-      A_times_b(pNew,Trels_ + cell_idx*DIM*(DIM+1),p);
+      A_times_b_affine(pNew,Trels_ + cell_idx*DIM*(DIM+1),p);
       cell_idx_new = compute_cell_idx(pNew,nC0,nC1,nC2,inc_x,inc_y,inc_z);
       if (cell_idx_new == cell_idx){
         // great, we didn't leave the cell. So we can use pNew.
@@ -748,7 +743,7 @@ __global__ void calc_v(double* pos, double* vel,
 
     cell_idx = compute_cell_idx(p,nC0,nC1,nC2,inc_x,inc_y,inc_z); 
     
-    A_times_b(v,As_ + cell_idx*DIM*(DIM+1),p);   
+    A_times_b_affine(v,As_ + cell_idx*DIM*(DIM+1),p);   
 
     // debug
     //v[0]=0;
