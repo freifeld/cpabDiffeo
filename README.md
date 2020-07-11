@@ -7,7 +7,7 @@ and its earlier conference version
 [\[Freifeld et al., ICCV '15\]](http://people.csail.mit.edu/freifeld/publications.htm).
 
 The current implementation is written in **Python**+**CUDA**. 
-For a **Tensorflow/PyTorch** implementation (as well as pure NumPy version), see (libcpab)[https://github.com/SkafteNicki/libcpab].
+For a **Tensorflow/PyTorch** implementation (as well as pure NumPy version), see [libcpab](https://github.com/SkafteNicki/libcpab).
 
 You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by Angel Yu. 
 
