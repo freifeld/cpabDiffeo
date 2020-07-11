@@ -6,8 +6,10 @@ This implementation is based on our Journal paper,
 and its earlier conference version 
 [\[Freifeld et al., ICCV '15\]](http://people.csail.mit.edu/freifeld/publications.htm).
 
-The current implementation is written in **Python**+**CUDA**. We will soon release a **Tensorflow** implementation. 
-You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by my student, Angel Yu. Note, however, that Angel's CPU-based implementation has fewer options than the one that is (and will be) maintained here (e.g, his code is only in 1D or 2D, has less options for the prior, doesn't have image/signal registration, etc.)
+The current implementation is written in **Python**+**CUDA**. 
+For a **Tensorflow/PyTorch** implementation (as well as pure NumPy version), see (libcpab)[https://github.com/SkafteNicki/libcpab].
+
+You may also want to try a [partial implementation in Julia](https://github.com/angel8yu/cpab-diffeo-julia) written by Angel Yu. 
 
 ## Author of this software
 
